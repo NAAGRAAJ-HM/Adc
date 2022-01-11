@@ -4,8 +4,8 @@
 
 class class_Adc{
    public:
-      void InitFunction(void);
-      void MainFunction(void);
+      FUNC(void, ADC_CODE) InitFunction(void);
+      FUNC(void, ADC_CODE) MainFunction(void);
 };
 
 extern class_Adc Adc;

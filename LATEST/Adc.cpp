@@ -2,9 +2,9 @@
 
 class_Adc Adc;
 
-void class_Adc::InitFunction(void){
+FUNC(void, ADC_CODE) class_Adc::InitFunction(void){
 }
 
-void class_Adc::MainFunction(void){
+FUNC(void, ADC_CODE) class_Adc::MainFunction(void){
 }
 
