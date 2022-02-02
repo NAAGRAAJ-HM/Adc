@@ -8,6 +8,8 @@
 /*****************************************************/
 #include "Adc.h"
 
+#include "Adc_EcuM.h"
+
 /*****************************************************/
 /* #DEFINES                                          */
 /*****************************************************/
@@ -32,17 +34,19 @@
 /* OBJECTS                                           */
 /*****************************************************/
 class_Adc Adc;
+class_Adc_EcuM Adc_EcuM;
+class_Adc_EcuM *Adc_EcuM_ptr = &Adc_EcuM;
 
 /*****************************************************/
 /* FUNCTIONS                                         */
 /*****************************************************/
-FUNC(void, ADC_CODE) class_Adc::InitFunction(void){
+FUNC(void, ADC_CODE) class_Adc_EcuM::InitFunction(void){
+}
+
+FUNC(void, ADC_CODE) class_Adc_EcuM::DeInitFunction(void){
 }
 
 FUNC(void, ADC_CODE) class_Adc::MainFunction(void){
-}
-
-FUNC(void, ADC_CODE) class_Adc::DeInitFunction(void){
 }
 
 FUNC(void, ADC_CODE) class_Adc::SetupResultBuffer(void){

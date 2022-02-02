@@ -1,14 +1,15 @@
 #pragma once
 /*****************************************************/
-/* File   : Adc.h                                    */
+/* File   : Adc_EcuM.h                               */
 /* Author : Naagraaj HM                              */
 /*****************************************************/
 
 /*****************************************************/
 /* #INCLUDES                                         */
 /*****************************************************/
-#include "Std_Types.h"
 #include "Compiler_Cfg_Adc.h"
+
+#include "EcuM_Client.h"
 
 /*****************************************************/
 /* #DEFINES                                          */
@@ -21,23 +22,13 @@
 /*****************************************************/
 /* TYPEDEFS                                          */
 /*****************************************************/
-class class_Adc{
+class class_Adc_EcuM : public class_EcuM_Client{
    public:
 /*****************************************************/
 /* FUNCTIONS                                         */
 /*****************************************************/
-      FUNC(void, ADC_CODE) MainFunction             (void);
-      FUNC(void, ADC_CODE) SetupResultBuffer        (void);
-      FUNC(void, ADC_CODE) StartGroupConversion     (void);
-      FUNC(void, ADC_CODE) StopGroupConversion      (void);
-      FUNC(void, ADC_CODE) ReadGroup                (void);
-      FUNC(void, ADC_CODE) EnableHardwareTrigger    (void);
-      FUNC(void, ADC_CODE) DisableHardwareTrigger   (void);
-      FUNC(void, ADC_CODE) EnableGroupNotification  (void);
-      FUNC(void, ADC_CODE) DisableGroupNotification (void);
-      FUNC(void, ADC_CODE) GetGroupStatus           (void);
-      FUNC(void, ADC_CODE) GetStreamLastPointer     (void);
-      FUNC(void, ADC_CODE) GetVersionInfo           (void);
+      FUNC(void, ADC_CODE) InitFunction   (void);
+      FUNC(void, ADC_CODE) DeInitFunction (void);
 };
 
 /*****************************************************/
@@ -51,7 +42,7 @@ class class_Adc{
 /*****************************************************/
 /* OBJECTS                                           */
 /*****************************************************/
-extern class_Adc Adc;
+extern class_Adc_EcuM *Adc_EcuM_ptr;
 
 /*****************************************************/
 /* EOF                                               */
