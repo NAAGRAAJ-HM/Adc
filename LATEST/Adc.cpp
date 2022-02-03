@@ -33,9 +33,9 @@
 /*****************************************************/
 /* OBJECTS                                           */
 /*****************************************************/
-class_Adc Adc;
 class_Adc_EcuM Adc_EcuM;
-class_Adc_EcuM *Adc_EcuM_ptr = &Adc_EcuM;
+class_EcuM_Client *EcuM_Client_ptr_Adc = &Adc_EcuM;
+class_Adc Adc;
 
 /*****************************************************/
 /* FUNCTIONS                                         */

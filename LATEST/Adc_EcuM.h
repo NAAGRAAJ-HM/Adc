@@ -42,7 +42,7 @@ class class_Adc_EcuM : public class_EcuM_Client{
 /*****************************************************/
 /* OBJECTS                                           */
 /*****************************************************/
-extern class_Adc_EcuM *Adc_EcuM_ptr;
+extern class_EcuM_Client *EcuM_Client_ptr_Adc;
 
 /*****************************************************/
 /* EOF                                               */
