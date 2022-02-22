@@ -6,9 +6,10 @@
 /*****************************************************/
 /* #INCLUDES                                         */
 /*****************************************************/
-#include "Adc.h"
-
+#include "module.h"
 #include "Adc_EcuM.h"
+#include "Adc_SchM.h"
+#include "Adc_Unused.h"
 
 /*****************************************************/
 /* #DEFINES                                          */
@@ -21,6 +22,16 @@
 /*****************************************************/
 /* TYPEDEFS                                          */
 /*****************************************************/
+class module_Adc:
+      public abstract_module
+   ,  public interface_Adc_EcuM
+   ,  public interface_Adc_SchM
+{
+   public:
+      FUNC(void, ADC_CODE) InitFunction   (void);
+      FUNC(void, ADC_CODE) DeInitFunction (void);
+      FUNC(void, ADC_CODE) MainFunction   (void);
+};
 
 /*****************************************************/
 /* CONSTS                                            */
@@ -33,53 +44,54 @@
 /*****************************************************/
 /* OBJECTS                                           */
 /*****************************************************/
-class_Adc_EcuM Adc_EcuM;
-class_EcuM_Client *EcuM_Client_ptr_Adc = &Adc_EcuM;
-class_Adc Adc;
+module_Adc Adc;
+
+interface_Adc_EcuM *EcuM_Client_ptr_Adc = &Adc;
+interface_Adc_SchM *SchM_Client_ptr_Adc = &Adc;
 
 /*****************************************************/
 /* FUNCTIONS                                         */
 /*****************************************************/
-FUNC(void, ADC_CODE) class_Adc_EcuM::InitFunction(void){
+FUNC(void, ADC_CODE) module_Adc::InitFunction(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc_EcuM::DeInitFunction(void){
+FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc::MainFunction(void){
+FUNC(void, ADC_CODE) module_Adc::MainFunction(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc::SetupResultBuffer(void){
+FUNC(void, ADC_CODE) class_Adc_Unused::SetupResultBuffer(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc::StartGroupConversion(void){
+FUNC(void, ADC_CODE) class_Adc_Unused::StartGroupConversion(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc::StopGroupConversion(void){
+FUNC(void, ADC_CODE) class_Adc_Unused::StopGroupConversion(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc::ReadGroup(void){
+FUNC(void, ADC_CODE) class_Adc_Unused::ReadGroup(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc::EnableHardwareTrigger(void){
+FUNC(void, ADC_CODE) class_Adc_Unused::EnableHardwareTrigger(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc::DisableHardwareTrigger(void){
+FUNC(void, ADC_CODE) class_Adc_Unused::DisableHardwareTrigger(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc::EnableGroupNotification(void){
+FUNC(void, ADC_CODE) class_Adc_Unused::EnableGroupNotification(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc::DisableGroupNotification(void){
+FUNC(void, ADC_CODE) class_Adc_Unused::DisableGroupNotification(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc::GetGroupStatus(void){
+FUNC(void, ADC_CODE) class_Adc_Unused::GetGroupStatus(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc::GetStreamLastPointer(void){
+FUNC(void, ADC_CODE) class_Adc_Unused::GetStreamLastPointer(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc::GetVersionInfo(void){
+FUNC(void, ADC_CODE) class_Adc_Unused::GetVersionInfo(void){
 }
 
 /*****************************************************/

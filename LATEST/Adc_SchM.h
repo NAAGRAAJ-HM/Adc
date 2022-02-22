@@ -1,14 +1,15 @@
 #pragma once
 /*****************************************************/
-/* File   : Adc.h                                    */
+/* File   : Adc_SchM.h                               */
 /* Author : Naagraaj HM                              */
 /*****************************************************/
 
 /*****************************************************/
 /* #INCLUDES                                         */
 /*****************************************************/
-#include "Std_Types.h"
 #include "Compiler_Cfg_Adc.h"
+
+#include "SchM_Client.h"
 
 /*****************************************************/
 /* #DEFINES                                          */
@@ -21,23 +22,12 @@
 /*****************************************************/
 /* TYPEDEFS                                          */
 /*****************************************************/
-class class_Adc{
+class interface_Adc_SchM : public interface_SchM_Client{
    public:
 /*****************************************************/
 /* FUNCTIONS                                         */
 /*****************************************************/
-      FUNC(void, ADC_CODE) MainFunction             (void);
-      FUNC(void, ADC_CODE) SetupResultBuffer        (void);
-      FUNC(void, ADC_CODE) StartGroupConversion     (void);
-      FUNC(void, ADC_CODE) StopGroupConversion      (void);
-      FUNC(void, ADC_CODE) ReadGroup                (void);
-      FUNC(void, ADC_CODE) EnableHardwareTrigger    (void);
-      FUNC(void, ADC_CODE) DisableHardwareTrigger   (void);
-      FUNC(void, ADC_CODE) EnableGroupNotification  (void);
-      FUNC(void, ADC_CODE) DisableGroupNotification (void);
-      FUNC(void, ADC_CODE) GetGroupStatus           (void);
-      FUNC(void, ADC_CODE) GetStreamLastPointer     (void);
-      FUNC(void, ADC_CODE) GetVersionInfo           (void);
+      FUNC(void, ADC_CODE) MainFunction(void);
 };
 
 /*****************************************************/
@@ -51,7 +41,7 @@ class class_Adc{
 /*****************************************************/
 /* OBJECTS                                           */
 /*****************************************************/
-extern class_Adc Adc;
+extern interface_Adc_SchM *SchM_Client_ptr_Adc;
 
 /*****************************************************/
 /* EOF                                               */
