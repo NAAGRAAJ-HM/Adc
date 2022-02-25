@@ -27,8 +27,8 @@ class interface_Adc_EcuM : public interface_EcuM_Client{
 /*****************************************************/
 /* FUNCTIONS                                         */
 /*****************************************************/
-      FUNC(void, ADC_CODE) InitFunction   (void);
-      FUNC(void, ADC_CODE) DeInitFunction (void);
+      virtual FUNC(void, ADC_CODE) InitFunction   (void) = 0;
+      virtual FUNC(void, ADC_CODE) DeInitFunction (void) = 0;
 };
 
 /*****************************************************/
