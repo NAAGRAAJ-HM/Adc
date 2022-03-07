@@ -24,8 +24,6 @@
 /*****************************************************/
 class module_Adc:
       public abstract_module
-   ,  public interface_Adc_EcuM
-   ,  public interface_Adc_SchM
 {
    public:
       FUNC(void, ADC_CODE) InitFunction   (void);
@@ -44,10 +42,9 @@ class module_Adc:
 /*****************************************************/
 /* OBJECTS                                           */
 /*****************************************************/
-module_Adc Adc;
-
-interface_Adc_EcuM *EcuM_Client_ptr_Adc = &Adc;
-interface_Adc_SchM *SchM_Client_ptr_Adc = &Adc;
+module_Adc     Adc;
+infEcuMClient* gptrinfEcuMClient_Adc = &Adc;
+infSchMClient* gptrinfSchMClient_Adc = &Adc;
 
 /*****************************************************/
 /* FUNCTIONS                                         */
