@@ -7,8 +7,8 @@
 /* #INCLUDES                                         */
 /*****************************************************/
 #include "module.h"
-#include "Adc_EcuM.h"
-#include "Adc_SchM.h"
+#include "infAdc_EcuM.h"
+#include "infAdc_SchM.h"
 #include "Adc_Unused.h"
 
 /*****************************************************/
@@ -28,6 +28,7 @@ class module_Adc:
    public:
       FUNC(void, ADC_CODE) InitFunction   (void);
       FUNC(void, ADC_CODE) DeInitFunction (void);
+      FUNC(void, ADC_CODE) GetVersionInfo (void);
       FUNC(void, ADC_CODE) MainFunction   (void);
 };
 
@@ -44,6 +45,7 @@ class module_Adc:
 /*****************************************************/
 module_Adc     Adc;
 infEcuMClient* gptrinfEcuMClient_Adc = &Adc;
+infDcmClient*  gptrinfDcmClient_Adc  = &Adc;
 infSchMClient* gptrinfSchMClient_Adc = &Adc;
 
 /*****************************************************/
@@ -53,6 +55,9 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(void){
 }
 
 FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
+}
+
+FUNC(void, ADC_CODE) module_Adc::GetVersionInfo(void){
 }
 
 FUNC(void, ADC_CODE) module_Adc::MainFunction(void){
