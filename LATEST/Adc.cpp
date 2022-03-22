@@ -7,7 +7,7 @@
 /* #INCLUDES                                                                  */
 /******************************************************************************/
 #include "module.h"
-#include "infAdc_Version.h"
+#include "Adc_Cfg.h"
 #include "infAdc_EcuM.h"
 #include "infAdc_Dcm.h"
 #include "infAdc_SchM.h"
@@ -15,10 +15,19 @@
 /******************************************************************************/
 /* #DEFINES                                                                   */
 /******************************************************************************/
+#define ADC_AR_RELEASE_MAJOR_VERSION                                           4
+#define ADC_AR_RELEASE_MINOR_VERSION                                           3
 
 /******************************************************************************/
 /* MACROS                                                                     */
 /******************************************************************************/
+#if(ADC_AR_RELEASE_MAJOR_VERSION != STD_AR_RELEASE_MAJOR_VERSION)
+   #error "Incompatible ADC_AR_RELEASE_MAJOR_VERSION!"
+#endif
+
+#if(ADC_AR_RELEASE_MINOR_VERSION != STD_AR_RELEASE_MINOR_VERSION)
+   #error "Incompatible ADC_AR_RELEASE_MINOR_VERSION!"
+#endif
 
 /******************************************************************************/
 /* TYPEDEFS                                                                   */
@@ -61,6 +70,11 @@ FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
 }
 
 FUNC(void, ADC_CODE) module_Adc::GetVersionInfo(void){
+#if(STD_ON == Adc_DevErrorDetect)
+//TBD: API parameter check
+   Det_ReportError(
+   );
+#endif
 }
 
 FUNC(void, ADC_CODE) module_Adc::MainFunction(void){
