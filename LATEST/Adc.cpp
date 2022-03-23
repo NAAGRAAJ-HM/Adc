@@ -40,6 +40,16 @@ class module_Adc:
       FUNC(void, ADC_CODE) DeInitFunction (void);
       FUNC(void, ADC_CODE) GetVersionInfo (void);
       FUNC(void, ADC_CODE) MainFunction   (void);
+
+   private:
+      CONST(Std_TypeVersionInfo, ADC_CONST) VersionInfo = {
+            0x0000
+         ,  0xFFFF
+         ,  0x01
+         ,  '0'
+         ,  '1'
+         ,  '0'
+      };
 };
 
 /******************************************************************************/
