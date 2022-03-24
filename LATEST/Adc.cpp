@@ -7,7 +7,7 @@
 /* #INCLUDES                                                                  */
 /******************************************************************************/
 #include "module.h"
-#include "Adc_Cfg.h"
+#include "CfgAdc.h"
 #include "infAdc_EcuM.h"
 #include "infAdc_Dcm.h"
 #include "infAdc_SchM.h"
