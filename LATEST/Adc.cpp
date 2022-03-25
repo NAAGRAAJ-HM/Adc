@@ -6,11 +6,11 @@
 /******************************************************************************/
 /* #INCLUDES                                                                  */
 /******************************************************************************/
-#include "module.h"
-#include "CfgAdc.h"
-#include "infAdc_EcuM.h"
-#include "infAdc_Dcm.h"
-#include "infAdc_SchM.h"
+#include "module.hpp"
+#include "CfgAdc.hpp"
+#include "infAdc_EcuM.hpp"
+#include "infAdc_Dcm.hpp"
+#include "infAdc_SchM.hpp"
 
 /******************************************************************************/
 /* #DEFINES                                                                   */
@@ -90,7 +90,7 @@ FUNC(void, ADC_CODE) module_Adc::GetVersionInfo(void){
 FUNC(void, ADC_CODE) module_Adc::MainFunction(void){
 }
 
-#include "Adc_Unused.h"
+#include "Adc_Unused.hpp"
 
 FUNC(void, ADC_CODE) class_Adc_Unused::SetupResultBuffer(void){
 }
