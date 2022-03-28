@@ -90,7 +90,19 @@ FUNC(void, ADC_CODE) module_Adc::GetVersionInfo(void){
 FUNC(void, ADC_CODE) module_Adc::MainFunction(void){
 }
 
-#include "Adc_Unused.hpp"
+class class_Adc_Unused{
+   public:
+      FUNC(void, ADC_CODE) SetupResultBuffer        (void);
+      FUNC(void, ADC_CODE) StartGroupConversion     (void);
+      FUNC(void, ADC_CODE) StopGroupConversion      (void);
+      FUNC(void, ADC_CODE) ReadGroup                (void);
+      FUNC(void, ADC_CODE) EnableHardwareTrigger    (void);
+      FUNC(void, ADC_CODE) DisableHardwareTrigger   (void);
+      FUNC(void, ADC_CODE) EnableGroupNotification  (void);
+      FUNC(void, ADC_CODE) DisableGroupNotification (void);
+      FUNC(void, ADC_CODE) GetGroupStatus           (void);
+      FUNC(void, ADC_CODE) GetStreamLastPointer     (void);
+};
 
 FUNC(void, ADC_CODE) class_Adc_Unused::SetupResultBuffer(void){
 }
