@@ -7,7 +7,6 @@
 /* #INCLUDES                                                                  */
 /******************************************************************************/
 #include "module.hpp"
-#include "CfgAdc.hpp"
 #include "infAdc_EcuM.hpp"
 #include "infAdc_Dcm.hpp"
 #include "infAdc_SchM.hpp"
@@ -36,37 +35,40 @@ class module_Adc:
       public abstract_module
 {
    public:
+      module_Adc(Std_TypeVersionInfo lVersionInfo) : abstract_module(lVersionInfo){
+      }
       FUNC(void, ADC_CODE) InitFunction   (void);
       FUNC(void, ADC_CODE) DeInitFunction (void);
-      FUNC(void, ADC_CODE) GetVersionInfo (void);
       FUNC(void, ADC_CODE) MainFunction   (void);
-
-   private:
-      CONST(Std_TypeVersionInfo, ADC_CONST) VersionInfo = {
-            0x0000
-         ,  0xFFFF
-         ,  0x01
-         ,  '0'
-         ,  '1'
-         ,  '0'
-      };
 };
+
+extern VAR(module_Adc, ADC_VAR) Adc;
 
 /******************************************************************************/
 /* CONSTS                                                                     */
 /******************************************************************************/
+CONSTP2VAR(infEcuMClient, ADC_VAR, ADC_CONST) gptrinfEcuMClient_Adc = &Adc;
+CONSTP2VAR(infDcmClient,  ADC_VAR, ADC_CONST) gptrinfDcmClient_Adc  = &Adc;
+CONSTP2VAR(infSchMClient, ADC_VAR, ADC_CONST) gptrinfSchMClient_Adc = &Adc;
 
 /******************************************************************************/
 /* PARAMS                                                                     */
 /******************************************************************************/
+#include "CfgAdc.hpp"
 
 /******************************************************************************/
 /* OBJECTS                                                                    */
 /******************************************************************************/
-VAR(module_Adc, ADC_VAR) Adc;
-CONSTP2VAR(infEcuMClient, ADC_VAR, ADC_CONST) gptrinfEcuMClient_Adc = &Adc;
-CONSTP2VAR(infDcmClient,  ADC_VAR, ADC_CONST) gptrinfDcmClient_Adc  = &Adc;
-CONSTP2VAR(infSchMClient, ADC_VAR, ADC_CONST) gptrinfSchMClient_Adc = &Adc;
+VAR(module_Adc, ADC_VAR) Adc(
+   {
+         0x0000
+      ,  0xFFFF
+      ,  0x01
+      ,  '0'
+      ,  '1'
+      ,  '0'
+   }
+);
 
 /******************************************************************************/
 /* FUNCTIONS                                                                  */
@@ -77,14 +79,6 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(void){
 
 FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
    Adc.IsInitDone = E_NOT_OK;
-}
-
-FUNC(void, ADC_CODE) module_Adc::GetVersionInfo(void){
-#if(STD_ON == Adc_DevErrorDetect)
-//TBD: API parameter check
-   Det_ReportError(
-   );
-#endif
 }
 
 FUNC(void, ADC_CODE) module_Adc::MainFunction(void){
