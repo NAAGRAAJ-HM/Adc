@@ -6,7 +6,7 @@
 /******************************************************************************/
 /* #INCLUDES                                                                  */
 /******************************************************************************/
-#include "module.hpp"
+#include "Module.hpp"
 #include "infAdc_EcuM.hpp"
 #include "infAdc_Dcm.hpp"
 #include "infAdc_SchM.hpp"
@@ -37,6 +37,9 @@ class module_Adc:
    public:
       module_Adc(Std_TypeVersionInfo lVersionInfo) : abstract_module(lVersionInfo){
       }
+      FUNC(void, _CODE) InitFunction(
+         CONSTP2CONST(CfgModule_TypeAbstract, _CONFIG_DATA, _APPL_CONST) lptrCfgModule
+      );
       FUNC(void, ADC_CODE) InitFunction   (void);
       FUNC(void, ADC_CODE) DeInitFunction (void);
       FUNC(void, ADC_CODE) MainFunction   (void);
@@ -73,7 +76,19 @@ VAR(module_Adc, ADC_VAR) Adc(
 /******************************************************************************/
 /* FUNCTIONS                                                                  */
 /******************************************************************************/
-FUNC(void, ADC_CODE) module_Adc::InitFunction(void){
+FUNC(void, ADC_CODE) module_Adc::InitFunction(
+   CONSTP2CONST(CfgAdc_Type, CFGADC_CONFIG_DATA, CFGADC_APPL_CONST) lptrCfgAdc
+){
+   if(NULL_PTR == lptrCfgAdc){
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+      );
+#endif
+   }
+   else{
+// check lptrCfgAdc for memory faults
+// use PBcfg_Adc as back-up configuration
+   }
    Adc.IsInitDone = E_OK;
 }
 
