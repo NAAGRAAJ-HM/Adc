@@ -37,10 +37,9 @@ class module_Adc:
    public:
       module_Adc(Std_TypeVersionInfo lVersionInfo) : abstract_module(lVersionInfo){
       }
-      FUNC(void, _CODE) InitFunction(
-         CONSTP2CONST(CfgModule_TypeAbstract, _CONFIG_DATA, _APPL_CONST) lptrCfgModule
+      FUNC(void, ADC_CODE) InitFunction(
+         CONSTP2CONST(CfgModule_TypeAbstract, ADC_CONFIG_DATA, ADC_APPL_CONST) lptrCfgModule
       );
-      FUNC(void, ADC_CODE) InitFunction   (void);
       FUNC(void, ADC_CODE) DeInitFunction (void);
       FUNC(void, ADC_CODE) MainFunction   (void);
 };
@@ -77,23 +76,39 @@ VAR(module_Adc, ADC_VAR) Adc(
 /* FUNCTIONS                                                                  */
 /******************************************************************************/
 FUNC(void, ADC_CODE) module_Adc::InitFunction(
-   CONSTP2CONST(CfgAdc_Type, CFGADC_CONFIG_DATA, CFGADC_APPL_CONST) lptrCfgAdc
+   CONSTP2CONST(CfgModule_TypeAbstract, ADC_CONFIG_DATA, ADC_APPL_CONST) lptrCfgModule
 ){
-   if(NULL_PTR == lptrCfgAdc){
+   if(E_OK == IsInitDone){
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
       );
 #endif
    }
    else{
-// check lptrCfgAdc for memory faults
+      if(NULL_PTR == lptrCfgModule){
+#if(STD_ON == Adc_DevErrorDetect)
+         Det_ReportError(
+         );
+#endif
+      }
+      else{
+// check lptrCfgModule for memory faults
 // use PBcfg_Adc as back-up configuration
+      }
+      IsInitDone = E_OK;
    }
-   Adc.IsInitDone = E_OK;
 }
 
 FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
-   Adc.IsInitDone = E_NOT_OK;
+   if(E_OK != IsInitDone){
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+      );
+#endif
+   }
+   else{
+      IsInitDone = E_NOT_OK;
+   }
 }
 
 FUNC(void, ADC_CODE) module_Adc::MainFunction(void){
