@@ -78,6 +78,7 @@ VAR(module_Adc, ADC_VAR) Adc(
 FUNC(void, ADC_CODE) module_Adc::InitFunction(
    CONSTP2CONST(CfgModule_TypeAbstract, ADC_CONFIG_DATA, ADC_APPL_CONST) lptrCfgModule
 ){
+#if(STD_ON == Adc_InitCheck)
    if(E_OK == IsInitDone){
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
@@ -85,6 +86,7 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
 #endif
    }
    else{
+#endif
       if(NULL_PTR == lptrCfgModule){
 #if(STD_ON == Adc_DevErrorDetect)
          Det_ReportError(
@@ -96,10 +98,13 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
 // use PBcfg_Adc as back-up configuration
       }
       IsInitDone = E_OK;
+#if(STD_ON == Adc_InitCheck)
    }
+#endif
 }
 
 FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
+#if(STD_ON == Adc_InitCheck)
    if(E_OK != IsInitDone){
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
@@ -107,11 +112,26 @@ FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
 #endif
    }
    else{
+#endif
       IsInitDone = E_NOT_OK;
+#if(STD_ON == Adc_InitCheck)
    }
+#endif
 }
 
 FUNC(void, ADC_CODE) module_Adc::MainFunction(void){
+#if(STD_ON == Adc_InitCheck)
+   if(E_OK != IsInitDone){
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+      );
+#endif
+   }
+   else{
+#endif
+#if(STD_ON == Adc_InitCheck)
+   }
+#endif
 }
 
 class class_Adc_Unused{
