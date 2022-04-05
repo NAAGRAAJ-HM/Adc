@@ -158,6 +158,7 @@ FUNC(void, ADC_CODE) class_Adc_Unused::StopGroupConversion(void){
 }
 
 FUNC(void, ADC_CODE) class_Adc_Unused::ReadGroup(void){
+// Adc_TypeBufferResults
 }
 
 FUNC(void, ADC_CODE) class_Adc_Unused::EnableHardwareTrigger(void){
@@ -176,6 +177,7 @@ FUNC(void, ADC_CODE) class_Adc_Unused::GetGroupStatus(void){
 }
 
 FUNC(void, ADC_CODE) class_Adc_Unused::GetStreamLastPointer(void){
+// Adc_TypeBufferResults
 }
 
 /******************************************************************************/
