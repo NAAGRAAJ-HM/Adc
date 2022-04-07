@@ -101,8 +101,8 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
             lptrCfg = lptrCfgModule;
          }
          else{
-// use PBcfg_CanIf as back-up configuration
-            lptrCfg = PBcfg_CanIf;
+// use PBcfgCanIf as back-up configuration
+            lptrCfg = &PBcfgAdc;
          }
       }
       IsInitDone = E_OK;
