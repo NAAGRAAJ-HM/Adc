@@ -154,19 +154,128 @@ class class_Adc_Unused{
       FUNC(void, ADC_CODE) DisableGroupNotification (void);
       FUNC(void, ADC_CODE) GetGroupStatus           (void);
       FUNC(void, ADC_CODE) GetStreamLastPointer     (void);
+
+//TBD: to be moved to additional class?
+#if(STD_ON == Adc_SupportStatePowerLow)
+      FUNC(void,               ADC_CODE) PreparePowerState    (Adc_TypeStatePower lstStatePowerTargetRequested);
+      FUNC(void,               ADC_CODE) SetPowerState        (void);
+      FUNC(Adc_TypeStatePower, ADC_CODE) GetCurrentPowerState (void);
+      FUNC(Adc_TypeStatePower, ADC_CODE) GetTargetPowerState  (void);
+#endif
 };
 
 FUNC(void, ADC_CODE) class_Adc_Unused::SetupResultBuffer(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc_Unused::StartGroupConversion(void){
+FUNC(void, ADC_CODE) class_Adc_Unused::StartGroupConversion(
+   Adc_TypeChannelGroup* lpstChannelGroup
+){
+#if(STD_ON == Adc_InitCheck)
+   if(E_OK != IsInitDone){
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+         ADC_E_UNINIT
+      );
+#endif
+   }
+   else{
+#endif
+      if(
+         TRUE
+         //TBD: group check lpstChannelGroup
+      ){
+         if(
+            eSourceTrigger_EventSoftware == lpstChannelGroup->SourceTrigger
+         ){
+            //TBD: DET error check for ADC_E_BUFFER_UNINIT
+         }
+         else{
+#if(STD_ON == Adc_DevErrorDetect)
+            Det_ReportError(
+               ADC_E_WRONG_TRIGG_SRC //hardware
+            );
+#endif
+         }
+      }
+      else{
+#if(STD_ON == Adc_DevErrorDetect)
+         Det_ReportError(
+            ADC_E_PARAM_GROUP
+         );
+#endif
+      }
+#if(STD_ON == Adc_InitCheck)
+   }
+#endif
 }
 
 FUNC(void, ADC_CODE) class_Adc_Unused::StopGroupConversion(void){
+#if(STD_ON == Adc_InitCheck)
+   if(E_OK != IsInitDone){
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+         ADC_E_UNINIT
+      );
+#endif
+   }
+   else{
+#endif
+      if(
+         TRUE
+         //TBD: group check lpstChannelGroup
+      ){
+         if(
+            eSourceTrigger_EventSoftware == lpstChannelGroup->SourceTrigger
+         ){
+         }
+         else{
+#if(STD_ON == Adc_DevErrorDetect)
+            Det_ReportError(
+               ADC_E_WRONG_TRIGG_SRC //hardware
+            );
+#endif
+         }
+      }
+      else{
+#if(STD_ON == Adc_DevErrorDetect)
+         Det_ReportError(
+            ADC_E_PARAM_GROUP
+         );
+#endif
+      }
+#if(STD_ON == Adc_InitCheck)
+   }
+#endif
 }
 
 FUNC(void, ADC_CODE) class_Adc_Unused::ReadGroup(void){
 // Adc_TypeBufferResults
+
+#if(STD_ON == Adc_InitCheck)
+   if(E_OK != IsInitDone){
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+         ADC_E_UNINIT
+      );
+#endif
+   }
+   else{
+#endif
+      if(
+         TRUE
+         //TBD: group check lpstChannelGroup
+      ){
+      }
+      else{
+#if(STD_ON == Adc_DevErrorDetect)
+         Det_ReportError(
+            ADC_E_PARAM_GROUP
+         );
+#endif
+      }
+#if(STD_ON == Adc_InitCheck)
+   }
+#endif
 }
 
 FUNC(void, ADC_CODE) class_Adc_Unused::EnableHardwareTrigger(void){
@@ -182,11 +291,96 @@ FUNC(void, ADC_CODE) class_Adc_Unused::DisableGroupNotification(void){
 }
 
 FUNC(void, ADC_CODE) class_Adc_Unused::GetGroupStatus(void){
+#if(STD_ON == Adc_InitCheck)
+   if(E_OK != IsInitDone){
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+         ADC_E_UNINIT
+      );
+#endif
+   }
+   else{
+#endif
+      if(
+         TRUE
+         //TBD: group check lpstChannelGroup
+      ){
+      }
+      else{
+#if(STD_ON == Adc_DevErrorDetect)
+         Det_ReportError(
+            ADC_E_PARAM_GROUP
+         );
+#endif
+      }
+#if(STD_ON == Adc_InitCheck)
+   }
+#endif
 }
 
 FUNC(void, ADC_CODE) class_Adc_Unused::GetStreamLastPointer(void){
 // Adc_TypeBufferResults
 }
+
+#if(STD_ON == Adc_SupportStatePowerLow)
+//TBD: to be moved to additional class?
+typedef enum{
+      eStatePower_Full
+   ,  eStatePower_
+}Adc_TypeStatePower;
+
+typedef struct{
+   Adc_TypeStatePower StatePowerCurrent;
+   Adc_TypeStatePower StatePowerTarget;
+   Std_TypeReturn     StateRequestActive;
+}Adc_TypeContextLowPower;
+
+Adc_TypeContextLowPower Adc_gstContextLowPower = {
+      eStatePower_Full // TBD: InitFunction, takecare of Adc_SupportStatePowerLow
+   ,  eStatePower_Full
+   ,  E_NOT_OK
+};
+
+FUNC(void, ADC_CODE) class_Adc_Unused::PreparePowerState(
+   Adc_TypeStatePower lstStatePowerTargetRequested
+){
+   if(E_NOT_OK == StateRequestActive){
+      Adc_gstContextLowPower.StatePowerTarget = lstStatePowerTargetRequested;
+      StateRequestActive = E_OK;
+#if(STD_OFF == Adc_StatePowerModeTransitionAsynch)
+      SetPowerState();
+      // TBD: handle in MainFunction, take care of Adc_SupportStatePowerLow, Adc_StatePowerModeTransitionAsynch
+#endif
+   }
+   else{
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+      );
+#endif
+   }
+}
+
+FUNC(void, ADC_CODE) class_Adc_Unused::SetPowerState(void){
+   if(E_OK == StateRequestActive){
+      Adc_gstContextLowPower.StatePowerCurrent = Adc_gstContextLowPower.StatePowerTarget;
+      StateRequestActive = E_NOT_OK;
+   }
+   else{
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+      );
+#endif
+   }
+}
+
+FUNC(Adc_TypeStatePower, ADC_CODE) class_Adc_Unused::GetCurrentPowerState(void){
+   return Adc_gstContextLowPower.StatePowerCurrent;
+}
+
+FUNC(Adc_TypeStatePower, ADC_CODE) class_Adc_Unused::GetTargetPowerState(void){
+   return Adc_gstContextLowPower.StatePowerTarget;
+}
+#endif
 
 /******************************************************************************/
 /* EOF                                                                        */
