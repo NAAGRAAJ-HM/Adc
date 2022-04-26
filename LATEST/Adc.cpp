@@ -28,11 +28,39 @@
    #error "Incompatible ADC_AR_RELEASE_VERSION_MINOR!"
 #endif
 
+#define GetStatusInit() (Adc.IsInitDone) //TBD: optimization
+
 /******************************************************************************/
 /* TYPEDEFS                                                                   */
 /******************************************************************************/
+#include "CfgAdc.hpp"
+#include "infAdc_Det.hpp"
+
+class class_Adc_Functionality{
+   public:
+      FUNC(void, ADC_CODE) SetupResultBuffer        (void);
+      FUNC(void, ADC_CODE) StartGroupConversion     (Adc_TypeChannelGroup* lpstChannelGroup);
+      FUNC(void, ADC_CODE) StopGroupConversion      (Adc_TypeChannelGroup* lpstChannelGroup);
+      FUNC(void, ADC_CODE) ReadGroup                (void);
+      FUNC(void, ADC_CODE) EnableHardwareTrigger    (void);
+      FUNC(void, ADC_CODE) DisableHardwareTrigger   (void);
+      FUNC(void, ADC_CODE) EnableGroupNotification  (void);
+      FUNC(void, ADC_CODE) DisableGroupNotification (void);
+      FUNC(void, ADC_CODE) GetGroupStatus           (void);
+      FUNC(void, ADC_CODE) GetStreamLastPointer     (void);
+
+//TBD: to be moved to additional class?
+#if(STD_ON == Adc_SupportStatePowerLow)
+      FUNC(void,               ADC_CODE) PreparePowerState    (Adc_TypeStatePower lstStatePowerTargetRequested);
+      FUNC(void,               ADC_CODE) SetPowerState        (void);
+      FUNC(Adc_TypeStatePower, ADC_CODE) GetCurrentPowerState (void);
+      FUNC(Adc_TypeStatePower, ADC_CODE) GetTargetPowerState  (void);
+#endif
+};
+
 class module_Adc:
       public abstract_module
+   ,  public class_Adc_Functionality
 {
    public:
       module_Adc(Std_TypeVersionInfo lVersionInfo) : abstract_module(lVersionInfo){
@@ -81,9 +109,13 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
    CONSTP2CONST(CfgModule_TypeAbstract, ADC_CONFIG_DATA, ADC_APPL_CONST) lptrCfgModule
 ){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK == IsInitDone){
+   if(E_OK == GetStatusInit()){
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  0 //TBD: IdError
       );
 #endif
    }
@@ -92,6 +124,10 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
       if(NULL_PTR == lptrCfgModule){
 #if(STD_ON == Adc_DevErrorDetect)
          Det_ReportError(
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  0 //TBD: IdError
          );
 #endif
       }
@@ -105,7 +141,7 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
             lptrCfg = &PBcfgAdc;
          }
       }
-      IsInitDone = E_OK;
+      GetStatusInit() = E_OK;
 #if(STD_ON == Adc_InitCheck)
    }
 #endif
@@ -113,15 +149,19 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
 
 FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK != IsInitDone){
+   if(E_OK != GetStatusInit()){
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  0 //TBD: IdError
       );
 #endif
    }
    else{
 #endif
-      IsInitDone = E_NOT_OK;
+      GetStatusInit() = E_NOT_OK;
 #if(STD_ON == Adc_InitCheck)
    }
 #endif
@@ -129,9 +169,13 @@ FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
 
 FUNC(void, ADC_CODE) module_Adc::MainFunction(void){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK != IsInitDone){
+   if(E_OK != GetStatusInit()){
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  0 //TBD: IdError
       );
 #endif
    }
@@ -142,39 +186,20 @@ FUNC(void, ADC_CODE) module_Adc::MainFunction(void){
 #endif
 }
 
-class class_Adc_Unused{
-   public:
-      FUNC(void, ADC_CODE) SetupResultBuffer        (void);
-      FUNC(void, ADC_CODE) StartGroupConversion     (void);
-      FUNC(void, ADC_CODE) StopGroupConversion      (void);
-      FUNC(void, ADC_CODE) ReadGroup                (void);
-      FUNC(void, ADC_CODE) EnableHardwareTrigger    (void);
-      FUNC(void, ADC_CODE) DisableHardwareTrigger   (void);
-      FUNC(void, ADC_CODE) EnableGroupNotification  (void);
-      FUNC(void, ADC_CODE) DisableGroupNotification (void);
-      FUNC(void, ADC_CODE) GetGroupStatus           (void);
-      FUNC(void, ADC_CODE) GetStreamLastPointer     (void);
-
-//TBD: to be moved to additional class?
-#if(STD_ON == Adc_SupportStatePowerLow)
-      FUNC(void,               ADC_CODE) PreparePowerState    (Adc_TypeStatePower lstStatePowerTargetRequested);
-      FUNC(void,               ADC_CODE) SetPowerState        (void);
-      FUNC(Adc_TypeStatePower, ADC_CODE) GetCurrentPowerState (void);
-      FUNC(Adc_TypeStatePower, ADC_CODE) GetTargetPowerState  (void);
-#endif
-};
-
-FUNC(void, ADC_CODE) class_Adc_Unused::SetupResultBuffer(void){
+FUNC(void, ADC_CODE) class_Adc_Functionality::SetupResultBuffer(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc_Unused::StartGroupConversion(
+FUNC(void, ADC_CODE) class_Adc_Functionality::StartGroupConversion(
    Adc_TypeChannelGroup* lpstChannelGroup
 ){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK != IsInitDone){
+   if(E_OK != GetStatusInit()){
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
-         ADC_E_UNINIT
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  ADC_E_UNINIT
       );
 #endif
    }
@@ -192,7 +217,10 @@ FUNC(void, ADC_CODE) class_Adc_Unused::StartGroupConversion(
          else{
 #if(STD_ON == Adc_DevErrorDetect)
             Det_ReportError(
-               ADC_E_WRONG_TRIGG_SRC //hardware
+                  0 //TBD: IdModule
+               ,  0 //TBD: IdInstance
+               ,  0 //TBD: IdApi
+               ,  ADC_E_WRONG_TRIGG_SRC //hardware
             );
 #endif
          }
@@ -200,7 +228,10 @@ FUNC(void, ADC_CODE) class_Adc_Unused::StartGroupConversion(
       else{
 #if(STD_ON == Adc_DevErrorDetect)
          Det_ReportError(
-            ADC_E_PARAM_GROUP
+               0 //TBD: IdModule
+            ,  0 //TBD: IdInstance
+            ,  0 //TBD: IdApi
+            ,  ADC_E_PARAM_GROUP
          );
 #endif
       }
@@ -209,12 +240,17 @@ FUNC(void, ADC_CODE) class_Adc_Unused::StartGroupConversion(
 #endif
 }
 
-FUNC(void, ADC_CODE) class_Adc_Unused::StopGroupConversion(void){
+FUNC(void, ADC_CODE) class_Adc_Functionality::StopGroupConversion(
+   Adc_TypeChannelGroup* lpstChannelGroup
+){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK != IsInitDone){
+   if(E_OK != GetStatusInit()){
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
-         ADC_E_UNINIT
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  ADC_E_UNINIT
       );
 #endif
    }
@@ -231,7 +267,10 @@ FUNC(void, ADC_CODE) class_Adc_Unused::StopGroupConversion(void){
          else{
 #if(STD_ON == Adc_DevErrorDetect)
             Det_ReportError(
-               ADC_E_WRONG_TRIGG_SRC //hardware
+                  0 //TBD: IdModule
+               ,  0 //TBD: IdInstance
+               ,  0 //TBD: IdApi
+               ,  ADC_E_WRONG_TRIGG_SRC //hardware
             );
 #endif
          }
@@ -239,7 +278,10 @@ FUNC(void, ADC_CODE) class_Adc_Unused::StopGroupConversion(void){
       else{
 #if(STD_ON == Adc_DevErrorDetect)
          Det_ReportError(
-            ADC_E_PARAM_GROUP
+               0 //TBD: IdModule
+            ,  0 //TBD: IdInstance
+            ,  0 //TBD: IdApi
+            ,  ADC_E_PARAM_GROUP
          );
 #endif
       }
@@ -248,14 +290,17 @@ FUNC(void, ADC_CODE) class_Adc_Unused::StopGroupConversion(void){
 #endif
 }
 
-FUNC(void, ADC_CODE) class_Adc_Unused::ReadGroup(void){
+FUNC(void, ADC_CODE) class_Adc_Functionality::ReadGroup(void){
 // Adc_TypeBufferResults
 
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK != IsInitDone){
+   if(E_OK != GetStatusInit()){
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
-         ADC_E_UNINIT
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  ADC_E_UNINIT
       );
 #endif
    }
@@ -269,7 +314,10 @@ FUNC(void, ADC_CODE) class_Adc_Unused::ReadGroup(void){
       else{
 #if(STD_ON == Adc_DevErrorDetect)
          Det_ReportError(
-            ADC_E_PARAM_GROUP
+               0 //TBD: IdModule
+            ,  0 //TBD: IdInstance
+            ,  0 //TBD: IdApi
+            ,  ADC_E_PARAM_GROUP
          );
 #endif
       }
@@ -278,24 +326,27 @@ FUNC(void, ADC_CODE) class_Adc_Unused::ReadGroup(void){
 #endif
 }
 
-FUNC(void, ADC_CODE) class_Adc_Unused::EnableHardwareTrigger(void){
+FUNC(void, ADC_CODE) class_Adc_Functionality::EnableHardwareTrigger(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc_Unused::DisableHardwareTrigger(void){
+FUNC(void, ADC_CODE) class_Adc_Functionality::DisableHardwareTrigger(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc_Unused::EnableGroupNotification(void){
+FUNC(void, ADC_CODE) class_Adc_Functionality::EnableGroupNotification(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc_Unused::DisableGroupNotification(void){
+FUNC(void, ADC_CODE) class_Adc_Functionality::DisableGroupNotification(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc_Unused::GetGroupStatus(void){
+FUNC(void, ADC_CODE) class_Adc_Functionality::GetGroupStatus(void){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK != IsInitDone){
+   if(E_OK != GetStatusInit()){
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
-         ADC_E_UNINIT
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  ADC_E_UNINIT
       );
 #endif
    }
@@ -309,7 +360,10 @@ FUNC(void, ADC_CODE) class_Adc_Unused::GetGroupStatus(void){
       else{
 #if(STD_ON == Adc_DevErrorDetect)
          Det_ReportError(
-            ADC_E_PARAM_GROUP
+               0 //TBD: IdModule
+            ,  0 //TBD: IdInstance
+            ,  0 //TBD: IdApi
+            ,  ADC_E_PARAM_GROUP
          );
 #endif
       }
@@ -318,7 +372,7 @@ FUNC(void, ADC_CODE) class_Adc_Unused::GetGroupStatus(void){
 #endif
 }
 
-FUNC(void, ADC_CODE) class_Adc_Unused::GetStreamLastPointer(void){
+FUNC(void, ADC_CODE) class_Adc_Functionality::GetStreamLastPointer(void){
 // Adc_TypeBufferResults
 }
 
@@ -341,7 +395,7 @@ Adc_TypeContextLowPower Adc_gstContextLowPower = {
    ,  E_NOT_OK
 };
 
-FUNC(void, ADC_CODE) class_Adc_Unused::PreparePowerState(
+FUNC(void, ADC_CODE) class_Adc_Functionality::PreparePowerState(
    Adc_TypeStatePower lstStatePowerTargetRequested
 ){
    if(E_NOT_OK == StateRequestActive){
@@ -355,12 +409,16 @@ FUNC(void, ADC_CODE) class_Adc_Unused::PreparePowerState(
    else{
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  0 //TBD: IdError
       );
 #endif
    }
 }
 
-FUNC(void, ADC_CODE) class_Adc_Unused::SetPowerState(void){
+FUNC(void, ADC_CODE) class_Adc_Functionality::SetPowerState(void){
    if(E_OK == StateRequestActive){
       Adc_gstContextLowPower.StatePowerCurrent = Adc_gstContextLowPower.StatePowerTarget;
       StateRequestActive = E_NOT_OK;
@@ -368,16 +426,20 @@ FUNC(void, ADC_CODE) class_Adc_Unused::SetPowerState(void){
    else{
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  0 //TBD: IdError
       );
 #endif
    }
 }
 
-FUNC(Adc_TypeStatePower, ADC_CODE) class_Adc_Unused::GetCurrentPowerState(void){
+FUNC(Adc_TypeStatePower, ADC_CODE) class_Adc_Functionality::GetCurrentPowerState(void){
    return Adc_gstContextLowPower.StatePowerCurrent;
 }
 
-FUNC(Adc_TypeStatePower, ADC_CODE) class_Adc_Unused::GetTargetPowerState(void){
+FUNC(Adc_TypeStatePower, ADC_CODE) class_Adc_Functionality::GetTargetPowerState(void){
    return Adc_gstContextLowPower.StatePowerTarget;
 }
 #endif
