@@ -28,36 +28,9 @@
    #error "Incompatible ADC_AR_RELEASE_VERSION_MINOR!"
 #endif
 
-#define GetStatusInit() (Adc.IsInitDone) //TBD: optimization
-
 /******************************************************************************/
 /* TYPEDEFS                                                                   */
 /******************************************************************************/
-#include "CfgAdc.hpp"
-#include "infAdc_Det.hpp"
-
-class class_Adc_Functionality{
-   public:
-      FUNC(void, ADC_CODE) SetupResultBuffer        (void);
-      FUNC(void, ADC_CODE) StartGroupConversion     (Adc_TypeChannelGroup* lpstChannelGroup);
-      FUNC(void, ADC_CODE) StopGroupConversion      (Adc_TypeChannelGroup* lpstChannelGroup);
-      FUNC(void, ADC_CODE) ReadGroup                (void);
-      FUNC(void, ADC_CODE) EnableHardwareTrigger    (void);
-      FUNC(void, ADC_CODE) DisableHardwareTrigger   (void);
-      FUNC(void, ADC_CODE) EnableGroupNotification  (void);
-      FUNC(void, ADC_CODE) DisableGroupNotification (void);
-      FUNC(void, ADC_CODE) GetGroupStatus           (void);
-      FUNC(void, ADC_CODE) GetStreamLastPointer     (void);
-
-//TBD: to be moved to additional class?
-#if(STD_ON == Adc_SupportStatePowerLow)
-      FUNC(void,               ADC_CODE) PreparePowerState    (Adc_TypeStatePower lstStatePowerTargetRequested);
-      FUNC(void,               ADC_CODE) SetPowerState        (void);
-      FUNC(Adc_TypeStatePower, ADC_CODE) GetCurrentPowerState (void);
-      FUNC(Adc_TypeStatePower, ADC_CODE) GetTargetPowerState  (void);
-#endif
-};
-
 class module_Adc:
       public abstract_module
    ,  public class_Adc_Functionality
@@ -141,7 +114,7 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
             lptrCfg = &PBcfgAdc;
          }
       }
-      GetStatusInit() = E_OK;
+      SetStatusInit(E_OK);
 #if(STD_ON == Adc_InitCheck)
    }
 #endif
@@ -161,7 +134,7 @@ FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
    }
    else{
 #endif
-      GetStatusInit() = E_NOT_OK;
+      SetStatusInit(E_NOT_OK);
 #if(STD_ON == Adc_InitCheck)
    }
 #endif
@@ -193,7 +166,8 @@ FUNC(void, ADC_CODE) class_Adc_Functionality::StartGroupConversion(
    Adc_TypeChannelGroup* lpstChannelGroup
 ){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK != GetStatusInit()){
+//TBD:    if(E_OK != GetStatusInit()){
+/*
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
             0 //TBD: IdModule
@@ -204,6 +178,7 @@ FUNC(void, ADC_CODE) class_Adc_Functionality::StartGroupConversion(
 #endif
    }
    else{
+*/
 #endif
       if(
          TRUE
@@ -236,7 +211,7 @@ FUNC(void, ADC_CODE) class_Adc_Functionality::StartGroupConversion(
 #endif
       }
 #if(STD_ON == Adc_InitCheck)
-   }
+//TBD:    }
 #endif
 }
 
@@ -244,7 +219,8 @@ FUNC(void, ADC_CODE) class_Adc_Functionality::StopGroupConversion(
    Adc_TypeChannelGroup* lpstChannelGroup
 ){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK != GetStatusInit()){
+//TBD:    if(E_OK != GetStatusInit()){
+/*
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
             0 //TBD: IdModule
@@ -255,6 +231,7 @@ FUNC(void, ADC_CODE) class_Adc_Functionality::StopGroupConversion(
 #endif
    }
    else{
+*/
 #endif
       if(
          TRUE
@@ -286,7 +263,7 @@ FUNC(void, ADC_CODE) class_Adc_Functionality::StopGroupConversion(
 #endif
       }
 #if(STD_ON == Adc_InitCheck)
-   }
+//TBD:    }
 #endif
 }
 
@@ -294,7 +271,8 @@ FUNC(void, ADC_CODE) class_Adc_Functionality::ReadGroup(void){
 // Adc_TypeBufferResults
 
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK != GetStatusInit()){
+//TBD:    if(E_OK != GetStatusInit()){
+/*
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
             0 //TBD: IdModule
@@ -305,6 +283,7 @@ FUNC(void, ADC_CODE) class_Adc_Functionality::ReadGroup(void){
 #endif
    }
    else{
+*/
 #endif
       if(
          TRUE
@@ -322,7 +301,7 @@ FUNC(void, ADC_CODE) class_Adc_Functionality::ReadGroup(void){
 #endif
       }
 #if(STD_ON == Adc_InitCheck)
-   }
+//TBD:    }
 #endif
 }
 
@@ -340,7 +319,8 @@ FUNC(void, ADC_CODE) class_Adc_Functionality::DisableGroupNotification(void){
 
 FUNC(void, ADC_CODE) class_Adc_Functionality::GetGroupStatus(void){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK != GetStatusInit()){
+//TBD:    if(E_OK != GetStatusInit()){
+/*
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
             0 //TBD: IdModule
@@ -351,6 +331,7 @@ FUNC(void, ADC_CODE) class_Adc_Functionality::GetGroupStatus(void){
 #endif
    }
    else{
+*/
 #endif
       if(
          TRUE
@@ -368,7 +349,7 @@ FUNC(void, ADC_CODE) class_Adc_Functionality::GetGroupStatus(void){
 #endif
       }
 #if(STD_ON == Adc_InitCheck)
-   }
+//TBD:    }
 #endif
 }
 
