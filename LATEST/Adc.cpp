@@ -7,6 +7,7 @@
 /* #INCLUDES                                                                  */
 /******************************************************************************/
 #include "Module.hpp"
+#include "Adc_core.hpp"
 #include "infAdc_EcuM.hpp"
 #include "infAdc_Dcm.hpp"
 #include "infAdc_SchM.hpp"
