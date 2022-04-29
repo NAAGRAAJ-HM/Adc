@@ -7,10 +7,12 @@
 /* #INCLUDES                                                                  */
 /******************************************************************************/
 #include "Module.hpp"
+#include "CfgAdc.hpp"
 #include "Adc_core.hpp"
-#include "infAdc_EcuM.hpp"
-#include "infAdc_Dcm.hpp"
-#include "infAdc_SchM.hpp"
+#include "infAdc.hpp"
+//TBD: move to infAdc.hpp?
+#include "infAdc_Det.hpp"
+
 
 /******************************************************************************/
 /* #DEFINES                                                                   */
@@ -44,6 +46,13 @@ class module_Adc:
       );
       FUNC(void, ADC_CODE) DeInitFunction (void);
       FUNC(void, ADC_CODE) MainFunction   (void);
+      ADC_CORE_FUNCTIONALITIES
+#if(STD_ON == Adc_SupportStatePowerLow)
+      FUNC(void,               ADC_CODE) PreparePowerState    (Adc_TypeStatePower lstStatePowerTargetRequested);
+      FUNC(void,               ADC_CODE) SetPowerState        (void);
+      FUNC(Adc_TypeStatePower, ADC_CODE) GetCurrentPowerState (void);
+      FUNC(Adc_TypeStatePower, ADC_CODE) GetTargetPowerState  (void);
+#endif
 };
 
 extern VAR(module_Adc, ADC_VAR) Adc;
@@ -58,7 +67,6 @@ CONSTP2VAR(infSchMClient, ADC_VAR, ADC_CONST) gptrinfSchMClient_Adc = &Adc;
 /******************************************************************************/
 /* PARAMS                                                                     */
 /******************************************************************************/
-#include "CfgAdc.hpp"
 
 /******************************************************************************/
 /* OBJECTS                                                                    */
