@@ -168,10 +168,10 @@ FUNC(void, ADC_CODE) module_Adc::MainFunction(void){
 #endif
 }
 
-FUNC(void, ADC_CODE) class_Adc_Functionality::SetupResultBuffer(void){
+FUNC(void, ADC_CODE) module_Adc::SetupResultBuffer(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc_Functionality::StartGroupConversion(
+FUNC(void, ADC_CODE) module_Adc::StartGroupConversion(
    Adc_TypeChannelGroup* lpstChannelGroup
 ){
 #if(STD_ON == Adc_InitCheck)
@@ -224,7 +224,7 @@ FUNC(void, ADC_CODE) class_Adc_Functionality::StartGroupConversion(
 #endif
 }
 
-FUNC(void, ADC_CODE) class_Adc_Functionality::StopGroupConversion(
+FUNC(void, ADC_CODE) module_Adc::StopGroupConversion(
    Adc_TypeChannelGroup* lpstChannelGroup
 ){
 #if(STD_ON == Adc_InitCheck)
@@ -276,7 +276,7 @@ FUNC(void, ADC_CODE) class_Adc_Functionality::StopGroupConversion(
 #endif
 }
 
-FUNC(void, ADC_CODE) class_Adc_Functionality::ReadGroup(void){
+FUNC(void, ADC_CODE) module_Adc::ReadGroup(void){
 // Adc_TypeBufferResults
 
 #if(STD_ON == Adc_InitCheck)
@@ -314,19 +314,19 @@ FUNC(void, ADC_CODE) class_Adc_Functionality::ReadGroup(void){
 #endif
 }
 
-FUNC(void, ADC_CODE) class_Adc_Functionality::EnableHardwareTrigger(void){
+FUNC(void, ADC_CODE) module_Adc::EnableHardwareTrigger(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc_Functionality::DisableHardwareTrigger(void){
+FUNC(void, ADC_CODE) module_Adc::DisableHardwareTrigger(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc_Functionality::EnableGroupNotification(void){
+FUNC(void, ADC_CODE) module_Adc::EnableGroupNotification(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc_Functionality::DisableGroupNotification(void){
+FUNC(void, ADC_CODE) module_Adc::DisableGroupNotification(void){
 }
 
-FUNC(void, ADC_CODE) class_Adc_Functionality::GetGroupStatus(void){
+FUNC(void, ADC_CODE) module_Adc::GetGroupStatus(void){
 #if(STD_ON == Adc_InitCheck)
 //TBD:    if(E_OK != GetStatusInit()){
 /*
@@ -362,7 +362,7 @@ FUNC(void, ADC_CODE) class_Adc_Functionality::GetGroupStatus(void){
 #endif
 }
 
-FUNC(void, ADC_CODE) class_Adc_Functionality::GetStreamLastPointer(void){
+FUNC(void, ADC_CODE) module_Adc::GetStreamLastPointer(void){
 // Adc_TypeBufferResults
 }
 
@@ -385,7 +385,7 @@ Adc_TypeContextLowPower Adc_gstContextLowPower = {
    ,  E_NOT_OK
 };
 
-FUNC(void, ADC_CODE) class_Adc_Functionality::PreparePowerState(
+FUNC(void, ADC_CODE) module_Adc::PreparePowerState(
    Adc_TypeStatePower lstStatePowerTargetRequested
 ){
    if(E_NOT_OK == StateRequestActive){
@@ -408,7 +408,7 @@ FUNC(void, ADC_CODE) class_Adc_Functionality::PreparePowerState(
    }
 }
 
-FUNC(void, ADC_CODE) class_Adc_Functionality::SetPowerState(void){
+FUNC(void, ADC_CODE) module_Adc::SetPowerState(void){
    if(E_OK == StateRequestActive){
       Adc_gstContextLowPower.StatePowerCurrent = Adc_gstContextLowPower.StatePowerTarget;
       StateRequestActive = E_NOT_OK;
@@ -425,11 +425,11 @@ FUNC(void, ADC_CODE) class_Adc_Functionality::SetPowerState(void){
    }
 }
 
-FUNC(Adc_TypeStatePower, ADC_CODE) class_Adc_Functionality::GetCurrentPowerState(void){
+FUNC(Adc_TypeStatePower, ADC_CODE) module_Adc::GetCurrentPowerState(void){
    return Adc_gstContextLowPower.StatePowerCurrent;
 }
 
-FUNC(Adc_TypeStatePower, ADC_CODE) class_Adc_Functionality::GetTargetPowerState(void){
+FUNC(Adc_TypeStatePower, ADC_CODE) module_Adc::GetTargetPowerState(void){
    return Adc_gstContextLowPower.StatePowerTarget;
 }
 #endif
