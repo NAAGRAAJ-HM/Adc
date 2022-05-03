@@ -91,7 +91,32 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
    CONSTP2CONST(CfgModule_TypeAbstract, ADC_CONFIG_DATA, ADC_APPL_CONST) lptrCfgModule
 ){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK == GetStatusInit()){
+   if(E_OK != GetStatusInit()){
+#endif
+      if(NULL_PTR != lptrCfgModule){
+         if(STD_LOW){
+            // check lptrCfgModule for memory faults
+            lptrCfg = lptrCfgModule;
+         }
+         else{
+            // use PBcfgCanIf as back-up configuration
+            lptrCfg = &PBcfgAdc;
+         }
+      }
+      else{
+#if(STD_ON == Adc_DevErrorDetect)
+         Det_ReportError(
+               0 //TBD: IdModule
+            ,  0 //TBD: IdInstance
+            ,  0 //TBD: IdApi
+            ,  0 //TBD: IdError
+         );
+#endif
+      }
+#if(STD_ON == Adc_InitCheck)
+      SetStatusInit(E_OK);
+   }
+   else{
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
             0 //TBD: IdModule
@@ -100,38 +125,18 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
          ,  0 //TBD: IdError
       );
 #endif
-   }
-   else{
-#endif
-      if(NULL_PTR == lptrCfgModule){
-#if(STD_ON == Adc_DevErrorDetect)
-         Det_ReportError(
-            0 //TBD: IdModule
-         ,  0 //TBD: IdInstance
-         ,  0 //TBD: IdApi
-         ,  0 //TBD: IdError
-         );
-#endif
-      }
-      else{
-         if(STD_LOW){
-// check lptrCfgModule for memory faults
-            lptrCfg = lptrCfgModule;
-         }
-         else{
-// use PBcfgCanIf as back-up configuration
-            lptrCfg = &PBcfgAdc;
-         }
-      }
-      SetStatusInit(E_OK);
-#if(STD_ON == Adc_InitCheck)
    }
 #endif
 }
 
 FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK != GetStatusInit()){
+   if(E_OK == GetStatusInit()){
+#endif
+#if(STD_ON == Adc_InitCheck)
+      SetStatusInit(E_NOT_OK);
+   }
+   else{
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
             0 //TBD: IdModule
@@ -140,18 +145,17 @@ FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
          ,  0 //TBD: IdError
       );
 #endif
-   }
-   else{
-#endif
-      SetStatusInit(E_NOT_OK);
-#if(STD_ON == Adc_InitCheck)
    }
 #endif
 }
 
 FUNC(void, ADC_CODE) module_Adc::MainFunction(void){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK != GetStatusInit()){
+   if(E_OK == GetStatusInit()){
+#endif
+#if(STD_ON == Adc_InitCheck)
+   }
+   else{
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
             0 //TBD: IdModule
@@ -160,10 +164,6 @@ FUNC(void, ADC_CODE) module_Adc::MainFunction(void){
          ,  0 //TBD: IdError
       );
 #endif
-   }
-   else{
-#endif
-#if(STD_ON == Adc_InitCheck)
    }
 #endif
 }
