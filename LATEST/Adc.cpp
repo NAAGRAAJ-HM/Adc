@@ -10,8 +10,6 @@
 #include "CfgAdc.hpp"
 #include "Adc_core.hpp"
 #include "infAdc.hpp"
-//TBD: move to infAdc.hpp?
-#include "infAdc_Det.hpp"
 
 
 /******************************************************************************/
@@ -122,7 +120,7 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  0 //TBD: IdError
+         ,  ADC_E_UNINIT
       );
 #endif
    }
@@ -142,7 +140,7 @@ FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  0 //TBD: IdError
+         ,  ADC_E_UNINIT
       );
 #endif
    }
@@ -161,7 +159,7 @@ FUNC(void, ADC_CODE) module_Adc::MainFunction(void){
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  0 //TBD: IdError
+         ,  ADC_E_UNINIT
       );
 #endif
    }
