@@ -36,6 +36,13 @@ class module_Adc:
       public abstract_module
    ,  public class_Adc_Functionality
 {
+   private:
+/******************************************************************************/
+/* OBJECTS                                                                    */
+/******************************************************************************/
+            Std_TypeReturn          IsInitDone{E_NOT_OK};
+      const CfgModule_TypeAbstract* lptrCfg{(CfgModule_TypeAbstract*)NULL_PTR};
+
    public:
       module_Adc(Std_TypeVersionInfo lVersionInfo) : abstract_module(lVersionInfo){
       }
@@ -89,7 +96,7 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
    CONSTP2CONST(CfgModule_TypeAbstract, ADC_CONFIG_DATA, ADC_APPL_CONST) lptrCfgModule
 ){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK != GetStatusInit()){
+   if(E_OK != IsInitDone){
 #endif
       if(NULL_PTR != lptrCfgModule){
          if(STD_HIGH){
@@ -110,7 +117,7 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
 #endif
       }
 #if(STD_ON == Adc_InitCheck)
-      SetStatusInit(E_OK);
+      IsInitDone = E_OK;
    }
    else{
 #if(STD_ON == Adc_DevErrorDetect)
@@ -127,10 +134,10 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
 
 FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK == GetStatusInit()){
+   if(E_OK == IsInitDone){
 #endif
 #if(STD_ON == Adc_InitCheck)
-      SetStatusInit(E_NOT_OK);
+      IsInitDone = E_NOT_OK;
    }
    else{
 #if(STD_ON == Adc_DevErrorDetect)
@@ -147,7 +154,7 @@ FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
 
 FUNC(void, ADC_CODE) module_Adc::MainFunction(void){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK == GetStatusInit()){
+   if(E_OK == IsInitDone){
 #endif
 #if(STD_ON == Adc_InitCheck)
    }
@@ -171,26 +178,15 @@ FUNC(void, ADC_CODE) module_Adc::StartGroupConversion(
    Adc_TypeChannelGroup* lpstChannelGroup
 ){
 #if(STD_ON == Adc_InitCheck)
-//TBD:    if(E_OK != GetStatusInit()){
-/*
-#if(STD_ON == Adc_DevErrorDetect)
-      Det_ReportError(
-            0 //TBD: IdModule
-         ,  0 //TBD: IdInstance
-         ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
-      );
-#endif
-   }
-   else{
-*/
+   if(E_OK == IsInitDone){
 #endif
       if(
          TRUE
          //TBD: group check lpstChannelGroup
       ){
          if(
-            eSourceTrigger_EventSoftware == lpstChannelGroup->SourceTrigger
+               eSourceTrigger_EventSoftware
+            == lpstChannelGroup->SourceTrigger
          ){
             //TBD: DET error check for ADC_E_BUFFER_UNINIT
          }
@@ -216,16 +212,8 @@ FUNC(void, ADC_CODE) module_Adc::StartGroupConversion(
 #endif
       }
 #if(STD_ON == Adc_InitCheck)
-//TBD:    }
-#endif
-}
-
-FUNC(void, ADC_CODE) module_Adc::StopGroupConversion(
-   Adc_TypeChannelGroup* lpstChannelGroup
-){
-#if(STD_ON == Adc_InitCheck)
-//TBD:    if(E_OK != GetStatusInit()){
-/*
+   }
+   else{
 #if(STD_ON == Adc_DevErrorDetect)
       Det_ReportError(
             0 //TBD: IdModule
@@ -235,15 +223,22 @@ FUNC(void, ADC_CODE) module_Adc::StopGroupConversion(
       );
 #endif
    }
-   else{
-*/
+#endif
+}
+
+FUNC(void, ADC_CODE) module_Adc::StopGroupConversion(
+   Adc_TypeChannelGroup* lpstChannelGroup
+){
+#if(STD_ON == Adc_InitCheck)
+   if(E_OK == IsInitDone){
 #endif
       if(
          TRUE
          //TBD: group check lpstChannelGroup
       ){
          if(
-            eSourceTrigger_EventSoftware == lpstChannelGroup->SourceTrigger
+               eSourceTrigger_EventSoftware
+            == lpstChannelGroup->SourceTrigger
          ){
          }
          else{
@@ -268,7 +263,17 @@ FUNC(void, ADC_CODE) module_Adc::StopGroupConversion(
 #endif
       }
 #if(STD_ON == Adc_InitCheck)
-//TBD:    }
+   }
+   else{
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  ADC_E_UNINIT
+      );
+#endif
+   }
 #endif
 }
 
@@ -276,19 +281,7 @@ FUNC(void, ADC_CODE) module_Adc::ReadGroup(void){
 // Adc_TypeBufferResults
 
 #if(STD_ON == Adc_InitCheck)
-//TBD:    if(E_OK != GetStatusInit()){
-/*
-#if(STD_ON == Adc_DevErrorDetect)
-      Det_ReportError(
-            0 //TBD: IdModule
-         ,  0 //TBD: IdInstance
-         ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
-      );
-#endif
-   }
-   else{
-*/
+   if(E_OK == IsInitDone){
 #endif
       if(
          TRUE
@@ -306,37 +299,230 @@ FUNC(void, ADC_CODE) module_Adc::ReadGroup(void){
 #endif
       }
 #if(STD_ON == Adc_InitCheck)
-//TBD:    }
+   }
+   else{
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  ADC_E_UNINIT
+      );
+#endif
+   }
 #endif
 }
 
-FUNC(void, ADC_CODE) module_Adc::EnableHardwareTrigger(void){
+FUNC(void, ADC_CODE) module_Adc::EnableHardwareTrigger(
+   Adc_TypeChannelGroup* lpstChannelGroup
+){
+#if(STD_ON == Adc_InitCheck)
+   if(E_OK == IsInitDone){
+#endif
+      if(
+         TRUE
+         //TBD: group check lpstChannelGroup
+      ){
+         if(
+               eSourceTrigger_EventSoftware
+            == lpstChannelGroup->SourceTrigger
+         ){
+            if(
+                  eModeConversion_OneShot
+               == lpstChannelGroup->ModeConversion
+            ){
+               //TBD: DET error check for ADC_E_BUFFER_UNINIT
+            }
+            else{
+#if(STD_ON == Adc_DevErrorDetect)
+               Det_ReportError(
+                     0 //TBD: IdModule
+                  ,  0 //TBD: IdInstance
+                  ,  0 //TBD: IdApi
+                  ,  ADC_E_WRONG_CONV_MODE
+               );
+#endif
+            }
+         }
+         else{
+#if(STD_ON == Adc_DevErrorDetect)
+            Det_ReportError(
+                  0 //TBD: IdModule
+               ,  0 //TBD: IdInstance
+               ,  0 //TBD: IdApi
+               ,  ADC_E_WRONG_TRIGG_SRC //hardware
+            );
+#endif
+         }
+      }
+      else{
+#if(STD_ON == Adc_DevErrorDetect)
+         Det_ReportError(
+               0 //TBD: IdModule
+            ,  0 //TBD: IdInstance
+            ,  0 //TBD: IdApi
+            ,  ADC_E_PARAM_GROUP
+         );
+#endif
+      }
+#if(STD_ON == Adc_InitCheck)
+   }
+   else{
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  ADC_E_UNINIT
+      );
+#endif
+   }
+#endif
 }
 
-FUNC(void, ADC_CODE) module_Adc::DisableHardwareTrigger(void){
+FUNC(void, ADC_CODE) module_Adc::DisableHardwareTrigger(
+   Adc_TypeChannelGroup* lpstChannelGroup
+){
+#if(STD_ON == Adc_InitCheck)
+   if(E_OK == IsInitDone){
+#endif
+      if(
+         TRUE
+         //TBD: group check lpstChannelGroup
+      ){
+         if(
+               eSourceTrigger_EventSoftware
+            == lpstChannelGroup->SourceTrigger
+         ){
+            if(
+                  eModeConversion_OneShot
+               == lpstChannelGroup->ModeConversion
+            ){
+            }
+            else{
+#if(STD_ON == Adc_DevErrorDetect)
+               Det_ReportError(
+                     0 //TBD: IdModule
+                  ,  0 //TBD: IdInstance
+                  ,  0 //TBD: IdApi
+                  ,  ADC_E_WRONG_CONV_MODE
+               );
+#endif
+            }
+         }
+         else{
+#if(STD_ON == Adc_DevErrorDetect)
+            Det_ReportError(
+                  0 //TBD: IdModule
+               ,  0 //TBD: IdInstance
+               ,  0 //TBD: IdApi
+               ,  ADC_E_WRONG_TRIGG_SRC //hardware
+            );
+#endif
+         }
+      }
+      else{
+#if(STD_ON == Adc_DevErrorDetect)
+         Det_ReportError(
+               0 //TBD: IdModule
+            ,  0 //TBD: IdInstance
+            ,  0 //TBD: IdApi
+            ,  ADC_E_PARAM_GROUP
+         );
+#endif
+      }
+#if(STD_ON == Adc_InitCheck)
+   }
+   else{
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  ADC_E_UNINIT
+      );
+#endif
+   }
+#endif
 }
 
-FUNC(void, ADC_CODE) module_Adc::EnableGroupNotification(void){
+FUNC(void, ADC_CODE) module_Adc::EnableGroupNotification(
+   Adc_TypeChannelGroup* lpstChannelGroup
+){
+#if(STD_ON == Adc_InitCheck)
+   if(E_OK == IsInitDone){
+#endif
+      if(
+         TRUE
+         //TBD: group check lpstChannelGroup
+      ){
+         //TBD: ADC_E_NOTIF_CAPABILITY, notification function pointer is NULL
+      }
+      else{
+#if(STD_ON == Adc_DevErrorDetect)
+         Det_ReportError(
+               0 //TBD: IdModule
+            ,  0 //TBD: IdInstance
+            ,  0 //TBD: IdApi
+            ,  ADC_E_PARAM_GROUP
+         );
+#endif
+      }
+#if(STD_ON == Adc_InitCheck)
+   }
+   else{
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  ADC_E_UNINIT
+      );
+#endif
+   }
+#endif
 }
 
-FUNC(void, ADC_CODE) module_Adc::DisableGroupNotification(void){
+FUNC(void, ADC_CODE) module_Adc::DisableGroupNotification(
+   Adc_TypeChannelGroup* lpstChannelGroup
+){
+#if(STD_ON == Adc_InitCheck)
+   if(E_OK == IsInitDone){
+#endif
+      if(
+         TRUE
+         //TBD: group check lpstChannelGroup
+      ){
+         //TBD: ADC_E_NOTIF_CAPABILITY, notification function pointer is NULL
+      }
+      else{
+#if(STD_ON == Adc_DevErrorDetect)
+         Det_ReportError(
+               0 //TBD: IdModule
+            ,  0 //TBD: IdInstance
+            ,  0 //TBD: IdApi
+            ,  ADC_E_PARAM_GROUP
+         );
+#endif
+      }
+#if(STD_ON == Adc_InitCheck)
+   }
+   else{
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  ADC_E_UNINIT
+      );
+#endif
+   }
+#endif
 }
 
 FUNC(void, ADC_CODE) module_Adc::GetGroupStatus(void){
 #if(STD_ON == Adc_InitCheck)
-//TBD:    if(E_OK != GetStatusInit()){
-/*
-#if(STD_ON == Adc_DevErrorDetect)
-      Det_ReportError(
-            0 //TBD: IdModule
-         ,  0 //TBD: IdInstance
-         ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
-      );
-#endif
-   }
-   else{
-*/
+   if(E_OK == IsInitDone){
 #endif
       if(
          TRUE
@@ -354,7 +540,17 @@ FUNC(void, ADC_CODE) module_Adc::GetGroupStatus(void){
 #endif
       }
 #if(STD_ON == Adc_InitCheck)
-//TBD:    }
+   }
+   else{
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  ADC_E_UNINIT
+      );
+#endif
+   }
 #endif
 }
 

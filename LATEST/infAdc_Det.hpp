@@ -24,6 +24,9 @@ typedef enum{
       ADC_E_UNINIT
    ,  ADC_E_PARAM_GROUP
    ,  ADC_E_WRONG_TRIGG_SRC
+   ,  ADC_E_BUFFER_UNINIT
+   ,  ADC_E_WRONG_CONV_MODE
+   ,  ADC_E_NOTIF_CAPABILITY
 }Adc_TypeDetErrorCode;
 
 /******************************************************************************/
