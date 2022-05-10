@@ -96,7 +96,10 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
    CONSTP2CONST(CfgModule_TypeAbstract, ADC_CONFIG_DATA, ADC_APPL_CONST) lptrCfgModule
 ){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK != IsInitDone){
+   if(
+         E_OK
+      != IsInitDone
+   ){
 #endif
       if(NULL_PTR != lptrCfgModule){
          if(STD_HIGH){
@@ -134,10 +137,29 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
 
 FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK == IsInitDone){
+   if(
+         E_OK
+      == IsInitDone
+   ){
 #endif
+      if(
+            TRUE // No ongoing conversions
+      ){
 #if(STD_ON == Adc_InitCheck)
-      IsInitDone = E_NOT_OK;
+         IsInitDone = E_NOT_OK;
+#endif
+      }
+      else{
+#if(STD_ON == Adc_DevErrorDetect)
+         Det_ReportError(
+               0 //TBD: IdModule
+            ,  0 //TBD: IdInstance
+            ,  0 //TBD: IdApi
+            ,  ADC_E_BUSY
+         );
+#endif
+      }
+#if(STD_ON == Adc_InitCheck)
    }
    else{
 #if(STD_ON == Adc_DevErrorDetect)
@@ -154,7 +176,10 @@ FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
 
 FUNC(void, ADC_CODE) module_Adc::MainFunction(void){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK == IsInitDone){
+   if(
+         E_OK
+      == IsInitDone
+   ){
 #endif
 #if(STD_ON == Adc_InitCheck)
    }
@@ -171,14 +196,84 @@ FUNC(void, ADC_CODE) module_Adc::MainFunction(void){
 #endif
 }
 
-FUNC(void, ADC_CODE) module_Adc::SetupResultBuffer(void){
+FUNC(void, ADC_CODE) module_Adc::SetupResultBuffer(
+   void
+// Adc_TypeChannelGroup* lpstChannelGroup
+){
+#if(STD_ON == Adc_InitCheck)
+   if(
+         E_OK
+      == IsInitDone
+   ){
+#endif
+      if(
+         TRUE
+         //TBD: group check lpstChannelGroup
+      ){
+         if(
+            TRUE
+            //TBD: DataBufferPtr is NULL_PTR
+         ){
+            if(
+               TRUE
+               // || at least one group is in idle
+            ){
+            }
+            else{
+#if(STD_ON == Adc_DevErrorDetect)
+               Det_ReportError(
+                     0 //TBD: IdModule
+                  ,  0 //TBD: IdInstance
+                  ,  0 //TBD: IdApi
+                  ,  ADC_E_BUSY
+               );
+#endif
+            }
+         }
+         else{
+#if(STD_ON == Adc_DevErrorDetect)
+            Det_ReportError(
+                  0 //TBD: IdModule
+               ,  0 //TBD: IdInstance
+               ,  0 //TBD: IdApi
+               ,  ADC_E_PARAM_POINTER
+            );
+#endif
+         }
+      }
+      else{
+#if(STD_ON == Adc_DevErrorDetect)
+         Det_ReportError(
+               0 //TBD: IdModule
+            ,  0 //TBD: IdInstance
+            ,  0 //TBD: IdApi
+            ,  ADC_E_PARAM_GROUP
+         );
+#endif
+      }
+#if(STD_ON == Adc_InitCheck)
+   }
+   else{
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  ADC_E_UNINIT
+      );
+#endif
+   }
+#endif
 }
 
 FUNC(void, ADC_CODE) module_Adc::StartGroupConversion(
    Adc_TypeChannelGroup* lpstChannelGroup
 ){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK == IsInitDone){
+   if(
+         E_OK
+      == IsInitDone
+   ){
 #endif
       if(
          TRUE
@@ -188,7 +283,38 @@ FUNC(void, ADC_CODE) module_Adc::StartGroupConversion(
                eSourceTrigger_EventSoftware
             == lpstChannelGroup->SourceTrigger
          ){
-            //TBD: DET error check for ADC_E_BUFFER_UNINIT
+            if(
+                  NULL_PTR
+               != lpstChannelGroup->BufferResults.ptrListResultsGroupConversion
+            ){
+               if(
+                     eStatusGroup_Busy
+                  != lpstChannelGroup->BufferResults.StatusGroup
+                  // || at least one group is in idle
+                  // || conversion request for the group is not already in queue
+               ){
+               }
+               else{
+#if(STD_ON == Adc_DevErrorDetect)
+                  Det_ReportError(
+                        0 //TBD: IdModule
+                     ,  0 //TBD: IdInstance
+                     ,  0 //TBD: IdApi
+                     ,  ADC_E_BUSY
+                  );
+#endif
+               }
+            }
+            else{
+#if(STD_ON == Adc_DevErrorDetect)
+               Det_ReportError(
+                     0 //TBD: IdModule
+                  ,  0 //TBD: IdInstance
+                  ,  0 //TBD: IdApi
+                  ,  ADC_E_UNINIT_BUFFER
+               );
+#endif
+            }
          }
          else{
 #if(STD_ON == Adc_DevErrorDetect)
@@ -196,7 +322,7 @@ FUNC(void, ADC_CODE) module_Adc::StartGroupConversion(
                   0 //TBD: IdModule
                ,  0 //TBD: IdInstance
                ,  0 //TBD: IdApi
-               ,  ADC_E_WRONG_TRIGG_SRC //hardware
+               ,  ADC_E_WRONG_SRC_TRIGG
             );
 #endif
          }
@@ -230,7 +356,10 @@ FUNC(void, ADC_CODE) module_Adc::StopGroupConversion(
    Adc_TypeChannelGroup* lpstChannelGroup
 ){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK == IsInitDone){
+   if(
+         E_OK
+      == IsInitDone
+   ){
 #endif
       if(
          TRUE
@@ -240,6 +369,21 @@ FUNC(void, ADC_CODE) module_Adc::StopGroupConversion(
                eSourceTrigger_EventSoftware
             == lpstChannelGroup->SourceTrigger
          ){
+            if(
+                  eStatusGroup_Idle
+               != lpstChannelGroup->BufferResults.StatusGroup
+            ){
+            }
+            else{
+#if(STD_ON == Adc_DevErrorDetect)
+               Det_ReportError(
+                     0 //TBD: IdModule
+                  ,  0 //TBD: IdInstance
+                  ,  0 //TBD: IdApi
+                  ,  ADC_E_IDLE
+               );
+#endif
+            }
          }
          else{
 #if(STD_ON == Adc_DevErrorDetect)
@@ -247,7 +391,7 @@ FUNC(void, ADC_CODE) module_Adc::StopGroupConversion(
                   0 //TBD: IdModule
                ,  0 //TBD: IdInstance
                ,  0 //TBD: IdApi
-               ,  ADC_E_WRONG_TRIGG_SRC //hardware
+               ,  ADC_E_WRONG_SRC_TRIGG
             );
 #endif
          }
@@ -277,16 +421,35 @@ FUNC(void, ADC_CODE) module_Adc::StopGroupConversion(
 #endif
 }
 
-FUNC(void, ADC_CODE) module_Adc::ReadGroup(void){
-// Adc_TypeBufferResults
-
+FUNC(void, ADC_CODE) module_Adc::ReadGroup(
+   Adc_TypeChannelGroup* lpstChannelGroup
+){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK == IsInitDone){
+   if(
+         E_OK
+      == IsInitDone
+   ){
 #endif
       if(
          TRUE
          //TBD: group check lpstChannelGroup
       ){
+         if(
+               eStatusGroup_Idle
+            != lpstChannelGroup->BufferResults.StatusGroup
+         ){
+            // Adc_TypeBufferResults
+         }
+         else{
+#if(STD_ON == Adc_DevErrorDetect)
+            Det_ReportError(
+                  0 //TBD: IdModule
+               ,  0 //TBD: IdInstance
+               ,  0 //TBD: IdApi
+               ,  ADC_E_IDLE
+            );
+#endif
+         }
       }
       else{
 #if(STD_ON == Adc_DevErrorDetect)
@@ -317,7 +480,10 @@ FUNC(void, ADC_CODE) module_Adc::EnableHardwareTrigger(
    Adc_TypeChannelGroup* lpstChannelGroup
 ){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK == IsInitDone){
+   if(
+         E_OK
+      == IsInitDone
+   ){
 #endif
       if(
          TRUE
@@ -331,7 +497,38 @@ FUNC(void, ADC_CODE) module_Adc::EnableHardwareTrigger(
                   eModeConversion_OneShot
                == lpstChannelGroup->ModeConversion
             ){
-               //TBD: DET error check for ADC_E_BUFFER_UNINIT
+               if(
+                     NULL_PTR
+                  != lpstChannelGroup->BufferResults.ptrListResultsGroupConversion
+               ){
+                  if(
+                     TRUE
+                     //    in the state idle !?!
+                     // || Trigger already enabled
+                     // || Maximum number of hardware triggers already enabled
+                  ){
+                  }
+                  else{
+#if(STD_ON == Adc_DevErrorDetect)
+                     Det_ReportError(
+                           0 //TBD: IdModule
+                        ,  0 //TBD: IdInstance
+                        ,  0 //TBD: IdApi
+                        ,  ADC_E_BUSY
+                     );
+#endif
+                  }
+               }
+               else{
+#if(STD_ON == Adc_DevErrorDetect)
+                  Det_ReportError(
+                        0 //TBD: IdModule
+                     ,  0 //TBD: IdInstance
+                     ,  0 //TBD: IdApi
+                     ,  ADC_E_UNINIT_BUFFER
+                  );
+#endif
+               }
             }
             else{
 #if(STD_ON == Adc_DevErrorDetect)
@@ -339,7 +536,7 @@ FUNC(void, ADC_CODE) module_Adc::EnableHardwareTrigger(
                      0 //TBD: IdModule
                   ,  0 //TBD: IdInstance
                   ,  0 //TBD: IdApi
-                  ,  ADC_E_WRONG_CONV_MODE
+                  ,  ADC_E_WRONG_MODE_CONV
                );
 #endif
             }
@@ -350,7 +547,7 @@ FUNC(void, ADC_CODE) module_Adc::EnableHardwareTrigger(
                   0 //TBD: IdModule
                ,  0 //TBD: IdInstance
                ,  0 //TBD: IdApi
-               ,  ADC_E_WRONG_TRIGG_SRC //hardware
+               ,  ADC_E_WRONG_SRC_TRIGG
             );
 #endif
          }
@@ -384,7 +581,10 @@ FUNC(void, ADC_CODE) module_Adc::DisableHardwareTrigger(
    Adc_TypeChannelGroup* lpstChannelGroup
 ){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK == IsInitDone){
+   if(
+         E_OK
+      == IsInitDone
+   ){
 #endif
       if(
          TRUE
@@ -398,6 +598,21 @@ FUNC(void, ADC_CODE) module_Adc::DisableHardwareTrigger(
                   eModeConversion_OneShot
                == lpstChannelGroup->ModeConversion
             ){
+               if(
+                  TRUE
+                  // Trigger already not enabled
+               ){
+               }
+               else{
+#if(STD_ON == Adc_DevErrorDetect)
+                  Det_ReportError(
+                        0 //TBD: IdModule
+                     ,  0 //TBD: IdInstance
+                     ,  0 //TBD: IdApi
+                     ,  ADC_E_IDLE
+                  );
+#endif
+               }
             }
             else{
 #if(STD_ON == Adc_DevErrorDetect)
@@ -405,7 +620,7 @@ FUNC(void, ADC_CODE) module_Adc::DisableHardwareTrigger(
                      0 //TBD: IdModule
                   ,  0 //TBD: IdInstance
                   ,  0 //TBD: IdApi
-                  ,  ADC_E_WRONG_CONV_MODE
+                  ,  ADC_E_WRONG_MODE_CONV
                );
 #endif
             }
@@ -416,7 +631,7 @@ FUNC(void, ADC_CODE) module_Adc::DisableHardwareTrigger(
                   0 //TBD: IdModule
                ,  0 //TBD: IdInstance
                ,  0 //TBD: IdApi
-               ,  ADC_E_WRONG_TRIGG_SRC //hardware
+               ,  ADC_E_WRONG_SRC_TRIGG
             );
 #endif
          }
@@ -447,16 +662,20 @@ FUNC(void, ADC_CODE) module_Adc::DisableHardwareTrigger(
 }
 
 FUNC(void, ADC_CODE) module_Adc::EnableGroupNotification(
-   Adc_TypeChannelGroup* lpstChannelGroup
+   void
+// Adc_TypeChannelGroup* lpstChannelGroup
 ){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK == IsInitDone){
+   if(
+         E_OK
+      == IsInitDone
+   ){
 #endif
       if(
          TRUE
          //TBD: group check lpstChannelGroup
       ){
-         //TBD: ADC_E_NOTIF_CAPABILITY, notification function pointer is NULL
+         //TBD: ADC_E_NOTIF_CAPABILITY, notification function pointer is NULL_PTR
       }
       else{
 #if(STD_ON == Adc_DevErrorDetect)
@@ -484,16 +703,20 @@ FUNC(void, ADC_CODE) module_Adc::EnableGroupNotification(
 }
 
 FUNC(void, ADC_CODE) module_Adc::DisableGroupNotification(
-   Adc_TypeChannelGroup* lpstChannelGroup
+   void
+// Adc_TypeChannelGroup* lpstChannelGroup
 ){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK == IsInitDone){
+   if(
+         E_OK
+      == IsInitDone
+   ){
 #endif
       if(
          TRUE
          //TBD: group check lpstChannelGroup
       ){
-         //TBD: ADC_E_NOTIF_CAPABILITY, notification function pointer is NULL
+         //TBD: ADC_E_NOTIF_CAPABILITY, notification function pointer is NULL_PTR
       }
       else{
 #if(STD_ON == Adc_DevErrorDetect)
@@ -522,7 +745,10 @@ FUNC(void, ADC_CODE) module_Adc::DisableGroupNotification(
 
 FUNC(void, ADC_CODE) module_Adc::GetGroupStatus(void){
 #if(STD_ON == Adc_InitCheck)
-   if(E_OK == IsInitDone){
+   if(
+         E_OK
+      == IsInitDone
+   ){
 #endif
       if(
          TRUE
@@ -554,15 +780,66 @@ FUNC(void, ADC_CODE) module_Adc::GetGroupStatus(void){
 #endif
 }
 
-FUNC(void, ADC_CODE) module_Adc::GetStreamLastPointer(void){
-// Adc_TypeBufferResults
+FUNC(void, ADC_CODE) module_Adc::GetStreamLastPointer(
+   Adc_TypeChannelGroup* lpstChannelGroup
+){
+#if(STD_ON == Adc_InitCheck)
+   if(
+         E_OK
+      == IsInitDone
+   ){
+#endif
+      if(
+         TRUE
+         //TBD: group check lpstChannelGroup
+      ){
+         if(
+               eStatusGroup_Idle
+            != lpstChannelGroup->BufferResults.StatusGroup
+         ){
+            // Adc_TypeBufferResults
+         }
+         else{
+#if(STD_ON == Adc_DevErrorDetect)
+            Det_ReportError(
+                  0 //TBD: IdModule
+               ,  0 //TBD: IdInstance
+               ,  0 //TBD: IdApi
+               ,  ADC_E_IDLE
+            );
+#endif
+         }
+      }
+      else{
+#if(STD_ON == Adc_DevErrorDetect)
+         Det_ReportError(
+               0 //TBD: IdModule
+            ,  0 //TBD: IdInstance
+            ,  0 //TBD: IdApi
+            ,  ADC_E_PARAM_GROUP
+         );
+#endif
+      }
+#if(STD_ON == Adc_InitCheck)
+   }
+   else{
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  ADC_E_UNINIT
+      );
+#endif
+   }
+#endif
 }
 
 #if(STD_ON == Adc_SupportStatePowerLow)
 //TBD: to be moved to additional class?
 typedef enum{
-      eStatePower_Full
-   ,  eStatePower_
+      eStatePower_Full = 0
+   ,  eStatePower_Maximum
 }Adc_TypeStatePower;
 
 typedef struct{
@@ -580,13 +857,31 @@ Adc_TypeContextLowPower Adc_gstContextLowPower = {
 FUNC(void, ADC_CODE) module_Adc::PreparePowerState(
    Adc_TypeStatePower lstStatePowerTargetRequested
 ){
-   if(E_NOT_OK == StateRequestActive){
-      Adc_gstContextLowPower.StatePowerTarget = lstStatePowerTargetRequested;
-      StateRequestActive = E_OK;
+   if(
+         eStatePower_Maximum
+      >  lstStatePowerTargetRequested
+   ){
+      if(
+            E_NOT_OK
+         == StateRequestActive
+      ){
+         Adc_gstContextLowPower.StatePowerTarget = lstStatePowerTargetRequested;
+         StateRequestActive = E_OK;
 #if(STD_OFF == Adc_StatePowerModeTransitionAsynch)
-      SetPowerState();
-      // TBD: handle in MainFunction, take care of Adc_SupportStatePowerLow, Adc_StatePowerModeTransitionAsynch
+         SetPowerState();
+         // TBD: handle in MainFunction, take care of Adc_SupportStatePowerLow, Adc_StatePowerModeTransitionAsynch
 #endif
+      }
+      else{
+#if(STD_ON == Adc_DevErrorDetect)
+         Det_ReportError(
+               0 //TBD: IdModule
+            ,  0 //TBD: IdInstance
+            ,  0 //TBD: IdApi
+            ,  ADC_E_NOT_POSSIBLE_TRANSITION
+         );
+#endif
+      }
    }
    else{
 #if(STD_ON == Adc_DevErrorDetect)
@@ -594,16 +889,70 @@ FUNC(void, ADC_CODE) module_Adc::PreparePowerState(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  0 //TBD: IdError
+         ,  ADC_E_NOT_SUPPORTED_STATE_POWER
       );
 #endif
    }
 }
 
-FUNC(void, ADC_CODE) module_Adc::SetPowerState(void){
-   if(E_OK == StateRequestActive){
-      Adc_gstContextLowPower.StatePowerCurrent = Adc_gstContextLowPower.StatePowerTarget;
-      StateRequestActive = E_NOT_OK;
+FUNC(void, ADC_CODE) module_Adc::SetPowerState(
+   void
+// Adc_TypeChannelGroup* lpstChannelGroup
+){
+#if(STD_ON == Adc_InitCheck)
+   if(
+         E_OK
+      == IsInitDone
+   ){
+#endif
+      if(
+         TRUE
+         // check ADC_E_NOT_PREPARED_PERIPHERAL
+      ){
+         if(
+            TRUE
+            // All channel/group are in Idle status
+         ){
+            if(
+                  E_OK
+               == StateRequestActive
+            ){
+               Adc_gstContextLowPower.StatePowerCurrent = Adc_gstContextLowPower.StatePowerTarget;
+               StateRequestActive = E_NOT_OK;
+            }
+            else{
+#if(STD_ON == Adc_DevErrorDetect)
+               Det_ReportError(
+                     0 //TBD: IdModule
+                  ,  0 //TBD: IdInstance
+                  ,  0 //TBD: IdApi
+                  ,  ADC_E_NOT_POSSIBLE_TRANSITION
+               );
+#endif
+            }
+         }
+         else{
+#if(STD_ON == Adc_DevErrorDetect)
+            Det_ReportError(
+                  0 //TBD: IdModule
+               ,  0 //TBD: IdInstance
+               ,  0 //TBD: IdApi
+               ,  ADC_E_NOT_DISENGAGED
+            );
+#endif
+         }
+      }
+      else{
+#if(STD_ON == Adc_DevErrorDetect)
+         Det_ReportError(
+               0 //TBD: IdModule
+            ,  0 //TBD: IdInstance
+            ,  0 //TBD: IdApi
+            ,  ADC_E_NOT_PREPARED_PERIPHERAL
+         );
+#endif
+      }
+#if(STD_ON == Adc_InitCheck)
    }
    else{
 #if(STD_ON == Adc_DevErrorDetect)
@@ -611,18 +960,67 @@ FUNC(void, ADC_CODE) module_Adc::SetPowerState(void){
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  0 //TBD: IdError
+         ,  ADC_E_UNINIT
       );
 #endif
    }
+#endif
 }
 
-FUNC(Adc_TypeStatePower, ADC_CODE) module_Adc::GetCurrentPowerState(void){
-   return Adc_gstContextLowPower.StatePowerCurrent;
+FUNC(Adc_TypeStatePower, ADC_CODE) module_Adc::GetCurrentPowerState(
+   void
+// Adc_TypeChannelGroup* lpstChannelGroup
+){
+   Adc_TypeStatePower lReturnValue = eStatePower_Maximum;
+#if(STD_ON == Adc_InitCheck)
+   if(
+         E_OK
+      == IsInitDone
+   ){
+#endif
+   lReturnValue = Adc_gstContextLowPower.StatePowerCurrent;
+#if(STD_ON == Adc_InitCheck)
+   }
+   else{
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  ADC_E_UNINIT
+      );
+#endif
+   }
+#endif
+   return lReturnValue;
 }
 
-FUNC(Adc_TypeStatePower, ADC_CODE) module_Adc::GetTargetPowerState(void){
-   return Adc_gstContextLowPower.StatePowerTarget;
+FUNC(Adc_TypeStatePower, ADC_CODE) module_Adc::GetTargetPowerState(
+   void
+// Adc_TypeChannelGroup* lpstChannelGroup
+){
+   Adc_TypeStatePower lReturnValue = eStatePower_Maximum;
+#if(STD_ON == Adc_InitCheck)
+   if(
+         E_OK
+      == IsInitDone
+   ){
+#endif
+   lReturnValue = Adc_gstContextLowPower.StatePowerTarget;
+#if(STD_ON == Adc_InitCheck)
+   }
+   else{
+#if(STD_ON == Adc_DevErrorDetect)
+      Det_ReportError(
+            0 //TBD: IdModule
+         ,  0 //TBD: IdInstance
+         ,  0 //TBD: IdApi
+         ,  ADC_E_UNINIT
+      );
+#endif
+   }
+#endif
+   return lReturnValue;
 }
 #endif
 
