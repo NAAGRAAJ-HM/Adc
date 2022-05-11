@@ -9,8 +9,7 @@
 #include "Module.hpp"
 #include "CfgAdc.hpp"
 #include "Adc_core.hpp"
-#include "infAdc.hpp"
-
+#include "infAdc_Exp.hpp"
 
 /******************************************************************************/
 /* #DEFINES                                                                   */
@@ -33,6 +32,7 @@
 /* TYPEDEFS                                                                   */
 /******************************************************************************/
 class module_Adc:
+   INTERFACES_EXPORTED_ADC
       public abstract_module
    ,  public class_Adc_Functionality
 {
