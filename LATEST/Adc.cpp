@@ -32,7 +32,7 @@
 /* TYPEDEFS                                                                   */
 /******************************************************************************/
 class module_Adc:
-   INTERFACES_EXPORTED_ADC
+      INTERFACES_EXPORTED_ADC
       public abstract_module
    ,  public class_Adc_Functionality
 {
