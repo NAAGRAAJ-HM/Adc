@@ -10,6 +10,7 @@
 #include "CfgAdc.hpp"
 #include "Adc_core.hpp"
 #include "infAdc_Exp.hpp"
+#include "infAdc_Imp.hpp"
 
 /******************************************************************************/
 /* #DEFINES                                                                   */
