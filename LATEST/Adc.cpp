@@ -80,7 +80,7 @@ CONSTP2VAR(infSchMClient, ADC_VAR, ADC_CONST) gptrinfSchMClient_Adc = &Adc;
 VAR(module_Adc, ADC_VAR) Adc(
    {
 #if(STD_ON == _ReSIM)
-// char strModuleName[6];
+   char strModuleName[6] = "ADC";
 #else
 #endif
          ADC_AR_RELEASE_VERSION_MAJOR
