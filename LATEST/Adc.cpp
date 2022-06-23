@@ -136,7 +136,9 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
 #endif
 }
 
-FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
+FUNC(void, ADC_CODE) module_Adc::DeInitFunction(
+   void
+){
 #if(STD_ON == Adc_InitCheck)
    if(
          E_OK
@@ -175,7 +177,9 @@ FUNC(void, ADC_CODE) module_Adc::DeInitFunction(void){
 #endif
 }
 
-FUNC(void, ADC_CODE) module_Adc::MainFunction(void){
+FUNC(void, ADC_CODE) module_Adc::MainFunction(
+   void
+){
 #if(STD_ON == Adc_InitCheck)
    if(
          E_OK
@@ -744,7 +748,9 @@ FUNC(void, ADC_CODE) module_Adc::DisableGroupNotification(
 #endif
 }
 
-FUNC(void, ADC_CODE) module_Adc::GetGroupStatus(void){
+FUNC(void, ADC_CODE) module_Adc::GetGroupStatus(
+   void
+){
 #if(STD_ON == Adc_InitCheck)
    if(
          E_OK
