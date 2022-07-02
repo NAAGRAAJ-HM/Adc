@@ -88,12 +88,7 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
    ){
 #endif
       if(NULL_PTR != lptrCfgModule){
-         if(STD_HIGH){
-            lptrCfg = lptrCfgModule;
-         }
-         else{
-            lptrCfg = &PBcfgAdc;
-         }
+         lptrCfg = lptrCfgModule;
       }
       else{
 #if(STD_ON == Adc_DevErrorDetect)
