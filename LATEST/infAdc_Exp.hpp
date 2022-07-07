@@ -8,9 +8,7 @@
 /* #INCLUDES                                                                  */
 /******************************************************************************/
 #include "infAdc_EcuM.hpp"
-#include "infAdc_Dcm.hpp"
 #include "infAdc_Det.hpp"
-#include "infAdc_SchM.hpp"
 
 /******************************************************************************/
 /* #DEFINES                                                                   */
