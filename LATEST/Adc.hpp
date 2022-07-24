@@ -7,6 +7,7 @@
 /******************************************************************************/
 /* #INCLUDES                                                                  */
 /******************************************************************************/
+#include "ConstAdc.hpp"
 #include "CfgAdc.hpp"
 #include "Adc_core.hpp"
 #include "infAdc_Exp.hpp"
@@ -31,13 +32,15 @@ class module_Adc:
 /******************************************************************************/
 /* OBJECTS                                                                    */
 /******************************************************************************/
+      const ConstAdc_Type* lptrConst = (ConstAdc_Type*)NULL_PTR;
 
    public:
 /******************************************************************************/
 /* FUNCTIONS                                                                  */
 /******************************************************************************/
       FUNC(void, ADC_CODE) InitFunction(
-         CONSTP2CONST(CfgModule_TypeAbstract, ADC_CONFIG_DATA, ADC_APPL_CONST) lptrCfgModule
+            CONSTP2CONST(ConstModule_TypeAbstract, ADC_CONST,       ADC_APPL_CONST) lptrConstModule
+         ,  CONSTP2CONST(CfgModule_TypeAbstract,   ADC_CONFIG_DATA, ADC_APPL_CONST) lptrCfgModule
       );
       FUNC(void, ADC_CODE) DeInitFunction (void);
       FUNC(void, ADC_CODE) MainFunction   (void);
