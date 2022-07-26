@@ -61,7 +61,7 @@ FUNC(void, ADC_CODE) module_Adc::InitFunction(
             (NULL_PTR != lptrConstModule)
          && (NULL_PTR != lptrCfgModule)
       ){
-         lptrConst = lptrConstModule;
+         lptrConst = (const ConstAdc_Type*)lptrConstModule;
          lptrCfg   = lptrCfgModule;
       }
       else{
