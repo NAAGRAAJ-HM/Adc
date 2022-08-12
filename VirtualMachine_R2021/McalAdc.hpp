@@ -24,7 +24,7 @@
 /* TYPEDEFS                                                                   */
 /******************************************************************************/
 class module_McalAdc:
-      INTERFACES_EXMCALPORTED_MCALADC
+      INTERFACES_EXPORTED_ADC
       public abstract_module
    ,  public class_McalAdc_Functionality
 {
@@ -38,18 +38,18 @@ class module_McalAdc:
 /******************************************************************************/
 /* FUNCTIONS                                                                  */
 /******************************************************************************/
-      FUNC(void, MCALADC_CODE) InitFunction(
-            CONSTP2CONST(ConstModule_TypeAbstract, MCALADC_CONST,       MCALADC_APPL_CONST) lptrConstModule
-         ,  CONSTP2CONST(CfgModule_TypeAbstract,   MCALADC_CONFIG_DATA, MCALADC_APPL_CONST) lptrCfgModule
+      FUNC(void, ADC_CODE) InitFunction(
+            CONSTP2CONST(ConstModule_TypeAbstract, ADC_CONST,       ADC_APPL_CONST) lptrConstModule
+         ,  CONSTP2CONST(CfgModule_TypeAbstract,   ADC_CONFIG_DATA, ADC_APPL_CONST) lptrCfgModule
       );
-      FUNC(void, MCALADC_CODE) DeInitFunction (void);
-      FUNC(void, MCALADC_CODE) MainFunction   (void);
-      MCALADC_CORE_FUNCTIONALITIES
+      FUNC(void, ADC_CODE) DeInitFunction (void);
+      FUNC(void, ADC_CODE) MainFunction   (void);
+      ADC_CORE_FUNCTIONALITIES
 #if(STD_ON == McalAdc_SupportStatePowerLow)
-      FUNC(void,               MCALADC_CODE) PreparePowerState    (McalAdc_TypeStatePower lstStatePowerTargetRequested);
-      FUNC(void,               MCALADC_CODE) SetPowerState        (void);
-      FUNC(McalAdc_TypeStatePower, MCALADC_CODE) GetCurrentPowerState (void);
-      FUNC(McalAdc_TypeStatePower, MCALADC_CODE) GetTargetPowerState  (void);
+      FUNC(void,               ADC_CODE) PreparePowerState    (McalAdc_TypeStatePower lstStatePowerTargetRequested);
+      FUNC(void,               ADC_CODE) SetPowerState        (void);
+      FUNC(McalAdc_TypeStatePower, ADC_CODE) GetCurrentPowerState (void);
+      FUNC(McalAdc_TypeStatePower, ADC_CODE) GetTargetPowerState  (void);
 #endif
 };
 
@@ -64,7 +64,7 @@ class module_McalAdc:
 /******************************************************************************/
 /* OBJECTS                                                                    */
 /******************************************************************************/
-extern VAR(module_McalAdc, MCALADC_VAR) McalAdc;
+extern VAR(module_McalAdc, ADC_VAR) McalAdc;
 
 /******************************************************************************/
 /* EOF                                                                        */

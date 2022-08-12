@@ -1,20 +1,39 @@
 #pragma once
 /******************************************************************************/
-/* File   : McalAdc.hpp                                                           */
+/* File   : Template.hpp                                                      */
 /* Author : NAGARAJA HM (c) since 1982. All rights reserved.                  */
 /******************************************************************************/
 
 /******************************************************************************/
 /* #INCLUDES                                                                  */
 /******************************************************************************/
-#include "ConstMcalAdc.hpp"
-#include "CfgMcalAdc.hpp"
-#include "McalAdc_core.hpp"
-#include "infMcalAdc_Exp.hpp"
 
 /******************************************************************************/
 /* #DEFINES                                                                   */
 /******************************************************************************/
+#define ADC1_XML_VERSION                                                 (20207)
+#define ADC1_CHx_EIM                                                       (0x0)
+#define ADC1_CHx_ESM                                                   (0x10002)
+#define ADC1_CLK                                                          (0x14)
+#define ADC1_DWSEL                                                         (0x0)
+#define ADC1_GLOBCTR                                                     (0x301)
+#define ADC1_IE                                                          (0x200)
+#define ADC1_RES_OUT0                                                      (0x0)
+#define ADC1_RES_OUT1                                                      (0x0)
+#define ADC1_RES_OUT2                                                      (0x0)
+#define ADC1_RES_OUT3                                                      (0x0)
+#define ADC1_RES_OUT4                                                      (0x0)
+#define ADC1_RES_OUT5                                                      (0x0)
+#define ADC1_RES_OUT6                                                      (0x0)
+#define ADC1_RES_OUT_EIM                                                   (0x0)
+#define ADC1_SQ1_4                                                        (0x50)
+#define ADC1_SQ5_8                                                         (0x0)
+#define ADC1_SQ_FB                                                       (0x100)
+#define ADC1_STC_0_3                                                     (0xA00)
+#define ADC1_STC_4_7                                                   (0xA000A)
+#define MF_P2_ADCSEL_CTRL                                                (0x400)
+#define MF_REF2_CTRL                                                       (0x1)
+#define MF_VMON_SEN_CTRL                                                  (0x21)
 
 /******************************************************************************/
 /* MACROS                                                                     */
@@ -23,35 +42,6 @@
 /******************************************************************************/
 /* TYPEDEFS                                                                   */
 /******************************************************************************/
-class module_McalAdc:
-      INTERFACES_EXPORTED_MCALADC
-      public abstract_module
-   ,  public class_McalAdc_Functionality
-{
-   private:
-/******************************************************************************/
-/* OBJECTS                                                                    */
-/******************************************************************************/
-      const ConstMcalAdc_Type* lptrConst = (ConstMcalAdc_Type*)NULL_PTR;
-
-   public:
-/******************************************************************************/
-/* FUNCTIONS                                                                  */
-/******************************************************************************/
-      FUNC(void, MCALADC_CODE) InitFunction(
-            CONSTP2CONST(ConstModule_TypeAbstract, MCALADC_CONST,       MCALADC_APPL_CONST) lptrConstModule
-         ,  CONSTP2CONST(CfgModule_TypeAbstract,   MCALADC_CONFIG_DATA, MCALADC_APPL_CONST) lptrCfgModule
-      );
-      FUNC(void, MCALADC_CODE) DeInitFunction (void);
-      FUNC(void, MCALADC_CODE) MainFunction   (void);
-      MCALADC_CORE_FUNCTIONALITIES
-#if(STD_ON == McalAdc_SupportStatePowerLow)
-      FUNC(void,               MCALADC_CODE) PreparePowerState    (McalAdc_TypeStatePower lstStatePowerTargetRequested);
-      FUNC(void,               MCALADC_CODE) SetPowerState        (void);
-      FUNC(McalAdc_TypeStatePower, MCALADC_CODE) GetCurrentPowerState (void);
-      FUNC(McalAdc_TypeStatePower, MCALADC_CODE) GetTargetPowerState  (void);
-#endif
-};
 
 /******************************************************************************/
 /* CONSTS                                                                     */
@@ -64,7 +54,10 @@ class module_McalAdc:
 /******************************************************************************/
 /* OBJECTS                                                                    */
 /******************************************************************************/
-extern VAR(module_McalAdc, MCALADC_VAR) McalAdc;
+
+/******************************************************************************/
+/* FUNCTIONS                                                                  */
+/******************************************************************************/
 
 /******************************************************************************/
 /* EOF                                                                        */

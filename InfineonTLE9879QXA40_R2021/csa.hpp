@@ -1,13 +1,15 @@
 #pragma once
 /******************************************************************************/
-/* File   : infMcalAdc_ServiceDet.hpp                                                    */
+/* File   : Template.hpp                                                      */
 /* Author : NAGARAJA HM (c) since 1982. All rights reserved.                  */
 /******************************************************************************/
 
 /******************************************************************************/
 /* #INCLUDES                                                                  */
 /******************************************************************************/
-#include "CompilerCfg_McalAdc.hpp"
+//#include "tle987x.hpp"
+//#include "types.hpp"
+//#include "sfr_access.hpp"
 
 /******************************************************************************/
 /* #DEFINES                                                                   */
@@ -21,20 +23,11 @@
 /* TYPEDEFS                                                                   */
 /******************************************************************************/
 typedef enum{
-      MCALADC_E_BUSY
-   ,  MCALADC_E_IDLE
-   ,  MCALADC_E_PARAM_GROUP
-   ,  MCALADC_E_PARAM_POINTER
-   ,  MCALADC_E_NOT_DISENGAGED
-   ,  MCALADC_E_NOT_PSERVICEOSSIBLE_TRANSITION
-   ,  MCALADC_E_NOT_PREPARED_PERIPHERAL
-   ,  MCALADC_E_NOT_SUPMCALPORTED_STATE_POWER
-   ,  MCALADC_E_NOTIF_CAPABILITY
-   ,  MCALADC_E_UNINIT
-   ,  MCALADC_E_UNINIT_BUFFER
-   ,  MCALADC_E_WRONG_SRC_TRIGG
-   ,  MCALADC_E_WRONG_MODE_CONV
-}McalAdc_TypeServiceDetErrorCode;
+      CSA_GAIN_10  = 0
+   ,  CSA_GAIN_20  = 1
+   ,  CSA_GAIN_40  = 2
+   ,  CSA_GAIN_60  = 3
+}TCSA_Gain;
 
 /******************************************************************************/
 /* CONSTS                                                                     */
@@ -51,6 +44,13 @@ typedef enum{
 /******************************************************************************/
 /* FUNCTIONS                                                                  */
 /******************************************************************************/
+extern void   CSA_Init       (void);
+extern uint16 CSA_Offset_Get (void);
+extern void   CSA_Power_On   (void);
+extern void   CSA_Power_Off  (void);
+extern void   CSA_Gain_Set   (uint32 gain);
+extern uint32 CSA_Gain_Get   (void);
+extern void   CSA_Set_Gain   (uint8 gain);
 
 /******************************************************************************/
 /* EOF                                                                        */

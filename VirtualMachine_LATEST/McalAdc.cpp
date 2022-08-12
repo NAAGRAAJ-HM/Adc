@@ -13,18 +13,18 @@
 /******************************************************************************/
 /* #DEFINES                                                                   */
 /******************************************************************************/
-#define ADC_AR_RELEASE_VERSION_MAJOR                                           4
-#define ADC_AR_RELEASE_VERSION_MINOR                                           3
+#define MCALADC_AR_RELEASE_VERSION_MAJOR                                           4
+#define MCALADC_AR_RELEASE_VERSION_MINOR                                           3
 
 /******************************************************************************/
 /* MACROS                                                                     */
 /******************************************************************************/
-#if(ADC_AR_RELEASE_VERSION_MAJOR != STD_AR_RELEASE_VERSION_MAJOR)
-   #error "Incompatible ADC_AR_RELEASE_VERSION_MAJOR!"
+#if(MCALADC_AR_RELEASE_VERSION_MAJOR != STD_AR_RELEASE_VERSION_MAJOR)
+   #error "Incompatible MCALADC_AR_RELEASE_VERSION_MAJOR!"
 #endif
 
-#if(ADC_AR_RELEASE_VERSION_MINOR != STD_AR_RELEASE_VERSION_MINOR)
-   #error "Incompatible ADC_AR_RELEASE_VERSION_MINOR!"
+#if(MCALADC_AR_RELEASE_VERSION_MINOR != STD_AR_RELEASE_VERSION_MINOR)
+   #error "Incompatible MCALADC_AR_RELEASE_VERSION_MINOR!"
 #endif
 
 /******************************************************************************/
@@ -42,14 +42,14 @@
 /******************************************************************************/
 /* OBJECTS                                                                    */
 /******************************************************************************/
-VAR(module_McalAdc, ADC_VAR) McalAdc;
+VAR(module_McalAdc, MCALADC_VAR) McalAdc;
 
 /******************************************************************************/
 /* FUNCTIONS                                                                  */
 /******************************************************************************/
-FUNC(void, ADC_CODE) module_McalAdc::InitFunction(
-      CONSTP2CONST(ConstModule_TypeAbstract, ADC_CONST,       ADC_APPL_CONST) lptrConstModule
-   ,  CONSTP2CONST(CfgModule_TypeAbstract,   ADC_CONFIG_DATA, ADC_APPL_CONST) lptrCfgModule
+FUNC(void, MCALADC_CODE) module_McalAdc::InitFunction(
+      CONSTP2CONST(ConstModule_TypeAbstract, MCALADC_CONST,       MCALADC_APPL_CONST) lptrConstModule
+   ,  CONSTP2CONST(CfgModule_TypeAbstract,   MCALADC_CONFIG_DATA, MCALADC_APPL_CONST) lptrCfgModule
 ){
 #if(STD_ON == McalAdc_InitCheck)
    if(
@@ -83,14 +83,14 @@ FUNC(void, ADC_CODE) module_McalAdc::InitFunction(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
+         ,  MCALADC_E_UNINIT
       );
 #endif
    }
 #endif
 }
 
-FUNC(void, ADC_CODE) module_McalAdc::DeInitFunction(
+FUNC(void, MCALADC_CODE) module_McalAdc::DeInitFunction(
    void
 ){
 #if(STD_ON == McalAdc_InitCheck)
@@ -112,7 +112,7 @@ FUNC(void, ADC_CODE) module_McalAdc::DeInitFunction(
                0 //TBD: IdModule
             ,  0 //TBD: IdInstance
             ,  0 //TBD: IdApi
-            ,  ADC_E_BUSY
+            ,  MCALADC_E_BUSY
          );
 #endif
       }
@@ -124,14 +124,14 @@ FUNC(void, ADC_CODE) module_McalAdc::DeInitFunction(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
+         ,  MCALADC_E_UNINIT
       );
 #endif
    }
 #endif
 }
 
-FUNC(void, ADC_CODE) module_McalAdc::MainFunction(
+FUNC(void, MCALADC_CODE) module_McalAdc::MainFunction(
    void
 ){
 #if(STD_ON == McalAdc_InitCheck)
@@ -148,14 +148,14 @@ FUNC(void, ADC_CODE) module_McalAdc::MainFunction(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
+         ,  MCALADC_E_UNINIT
       );
 #endif
    }
 #endif
 }
 
-FUNC(void, ADC_CODE) module_McalAdc::SetupResultBuffer(
+FUNC(void, MCALADC_CODE) module_McalAdc::SetupResultBuffer(
    void
 // McalAdc_TypeChannelGroup* lpstChannelGroup
 ){
@@ -184,7 +184,7 @@ FUNC(void, ADC_CODE) module_McalAdc::SetupResultBuffer(
                      0 //TBD: IdModule
                   ,  0 //TBD: IdInstance
                   ,  0 //TBD: IdApi
-                  ,  ADC_E_BUSY
+                  ,  MCALADC_E_BUSY
                );
 #endif
             }
@@ -195,7 +195,7 @@ FUNC(void, ADC_CODE) module_McalAdc::SetupResultBuffer(
                   0 //TBD: IdModule
                ,  0 //TBD: IdInstance
                ,  0 //TBD: IdApi
-               ,  ADC_E_PARAM_POINTER
+               ,  MCALADC_E_PARAM_POINTER
             );
 #endif
          }
@@ -206,7 +206,7 @@ FUNC(void, ADC_CODE) module_McalAdc::SetupResultBuffer(
                0 //TBD: IdModule
             ,  0 //TBD: IdInstance
             ,  0 //TBD: IdApi
-            ,  ADC_E_PARAM_GROUP
+            ,  MCALADC_E_PARAM_GROUP
          );
 #endif
       }
@@ -218,14 +218,14 @@ FUNC(void, ADC_CODE) module_McalAdc::SetupResultBuffer(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
+         ,  MCALADC_E_UNINIT
       );
 #endif
    }
 #endif
 }
 
-FUNC(void, ADC_CODE) module_McalAdc::StartGroupConversion(
+FUNC(void, MCALADC_CODE) module_McalAdc::StartGroupConversion(
    McalAdc_TypeChannelGroup* lpstChannelGroup
 ){
 #if(STD_ON == McalAdc_InitCheck)
@@ -259,7 +259,7 @@ FUNC(void, ADC_CODE) module_McalAdc::StartGroupConversion(
                         0 //TBD: IdModule
                      ,  0 //TBD: IdInstance
                      ,  0 //TBD: IdApi
-                     ,  ADC_E_BUSY
+                     ,  MCALADC_E_BUSY
                   );
 #endif
                }
@@ -270,7 +270,7 @@ FUNC(void, ADC_CODE) module_McalAdc::StartGroupConversion(
                      0 //TBD: IdModule
                   ,  0 //TBD: IdInstance
                   ,  0 //TBD: IdApi
-                  ,  ADC_E_UNINIT_BUFFER
+                  ,  MCALADC_E_UNINIT_BUFFER
                );
 #endif
             }
@@ -281,7 +281,7 @@ FUNC(void, ADC_CODE) module_McalAdc::StartGroupConversion(
                   0 //TBD: IdModule
                ,  0 //TBD: IdInstance
                ,  0 //TBD: IdApi
-               ,  ADC_E_WRONG_SRC_TRIGG
+               ,  MCALADC_E_WRONG_SRC_TRIGG
             );
 #endif
          }
@@ -292,7 +292,7 @@ FUNC(void, ADC_CODE) module_McalAdc::StartGroupConversion(
                0 //TBD: IdModule
             ,  0 //TBD: IdInstance
             ,  0 //TBD: IdApi
-            ,  ADC_E_PARAM_GROUP
+            ,  MCALADC_E_PARAM_GROUP
          );
 #endif
       }
@@ -304,14 +304,14 @@ FUNC(void, ADC_CODE) module_McalAdc::StartGroupConversion(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
+         ,  MCALADC_E_UNINIT
       );
 #endif
    }
 #endif
 }
 
-FUNC(void, ADC_CODE) module_McalAdc::StopGroupConversion(
+FUNC(void, MCALADC_CODE) module_McalAdc::StopGroupConversion(
    McalAdc_TypeChannelGroup* lpstChannelGroup
 ){
 #if(STD_ON == McalAdc_InitCheck)
@@ -339,7 +339,7 @@ FUNC(void, ADC_CODE) module_McalAdc::StopGroupConversion(
                      0 //TBD: IdModule
                   ,  0 //TBD: IdInstance
                   ,  0 //TBD: IdApi
-                  ,  ADC_E_IDLE
+                  ,  MCALADC_E_IDLE
                );
 #endif
             }
@@ -350,7 +350,7 @@ FUNC(void, ADC_CODE) module_McalAdc::StopGroupConversion(
                   0 //TBD: IdModule
                ,  0 //TBD: IdInstance
                ,  0 //TBD: IdApi
-               ,  ADC_E_WRONG_SRC_TRIGG
+               ,  MCALADC_E_WRONG_SRC_TRIGG
             );
 #endif
          }
@@ -361,7 +361,7 @@ FUNC(void, ADC_CODE) module_McalAdc::StopGroupConversion(
                0 //TBD: IdModule
             ,  0 //TBD: IdInstance
             ,  0 //TBD: IdApi
-            ,  ADC_E_PARAM_GROUP
+            ,  MCALADC_E_PARAM_GROUP
          );
 #endif
       }
@@ -373,14 +373,14 @@ FUNC(void, ADC_CODE) module_McalAdc::StopGroupConversion(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
+         ,  MCALADC_E_UNINIT
       );
 #endif
    }
 #endif
 }
 
-FUNC(void, ADC_CODE) module_McalAdc::ReadGroup(
+FUNC(void, MCALADC_CODE) module_McalAdc::ReadGroup(
    McalAdc_TypeChannelGroup* lpstChannelGroup
 ){
 #if(STD_ON == McalAdc_InitCheck)
@@ -405,7 +405,7 @@ FUNC(void, ADC_CODE) module_McalAdc::ReadGroup(
                   0 //TBD: IdModule
                ,  0 //TBD: IdInstance
                ,  0 //TBD: IdApi
-               ,  ADC_E_IDLE
+               ,  MCALADC_E_IDLE
             );
 #endif
          }
@@ -416,7 +416,7 @@ FUNC(void, ADC_CODE) module_McalAdc::ReadGroup(
                0 //TBD: IdModule
             ,  0 //TBD: IdInstance
             ,  0 //TBD: IdApi
-            ,  ADC_E_PARAM_GROUP
+            ,  MCALADC_E_PARAM_GROUP
          );
 #endif
       }
@@ -428,14 +428,14 @@ FUNC(void, ADC_CODE) module_McalAdc::ReadGroup(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
+         ,  MCALADC_E_UNINIT
       );
 #endif
    }
 #endif
 }
 
-FUNC(void, ADC_CODE) module_McalAdc::EnableHardwareTrigger(
+FUNC(void, MCALADC_CODE) module_McalAdc::EnableHardwareTrigger(
    McalAdc_TypeChannelGroup* lpstChannelGroup
 ){
 #if(STD_ON == McalAdc_InitCheck)
@@ -473,7 +473,7 @@ FUNC(void, ADC_CODE) module_McalAdc::EnableHardwareTrigger(
                            0 //TBD: IdModule
                         ,  0 //TBD: IdInstance
                         ,  0 //TBD: IdApi
-                        ,  ADC_E_BUSY
+                        ,  MCALADC_E_BUSY
                      );
 #endif
                   }
@@ -484,7 +484,7 @@ FUNC(void, ADC_CODE) module_McalAdc::EnableHardwareTrigger(
                         0 //TBD: IdModule
                      ,  0 //TBD: IdInstance
                      ,  0 //TBD: IdApi
-                     ,  ADC_E_UNINIT_BUFFER
+                     ,  MCALADC_E_UNINIT_BUFFER
                   );
 #endif
                }
@@ -495,7 +495,7 @@ FUNC(void, ADC_CODE) module_McalAdc::EnableHardwareTrigger(
                      0 //TBD: IdModule
                   ,  0 //TBD: IdInstance
                   ,  0 //TBD: IdApi
-                  ,  ADC_E_WRONG_MODE_CONV
+                  ,  MCALADC_E_WRONG_MODE_CONV
                );
 #endif
             }
@@ -506,7 +506,7 @@ FUNC(void, ADC_CODE) module_McalAdc::EnableHardwareTrigger(
                   0 //TBD: IdModule
                ,  0 //TBD: IdInstance
                ,  0 //TBD: IdApi
-               ,  ADC_E_WRONG_SRC_TRIGG
+               ,  MCALADC_E_WRONG_SRC_TRIGG
             );
 #endif
          }
@@ -517,7 +517,7 @@ FUNC(void, ADC_CODE) module_McalAdc::EnableHardwareTrigger(
                0 //TBD: IdModule
             ,  0 //TBD: IdInstance
             ,  0 //TBD: IdApi
-            ,  ADC_E_PARAM_GROUP
+            ,  MCALADC_E_PARAM_GROUP
          );
 #endif
       }
@@ -529,14 +529,14 @@ FUNC(void, ADC_CODE) module_McalAdc::EnableHardwareTrigger(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
+         ,  MCALADC_E_UNINIT
       );
 #endif
    }
 #endif
 }
 
-FUNC(void, ADC_CODE) module_McalAdc::DisableHardwareTrigger(
+FUNC(void, MCALADC_CODE) module_McalAdc::DisableHardwareTrigger(
    McalAdc_TypeChannelGroup* lpstChannelGroup
 ){
 #if(STD_ON == McalAdc_InitCheck)
@@ -568,7 +568,7 @@ FUNC(void, ADC_CODE) module_McalAdc::DisableHardwareTrigger(
                         0 //TBD: IdModule
                      ,  0 //TBD: IdInstance
                      ,  0 //TBD: IdApi
-                     ,  ADC_E_IDLE
+                     ,  MCALADC_E_IDLE
                   );
 #endif
                }
@@ -579,7 +579,7 @@ FUNC(void, ADC_CODE) module_McalAdc::DisableHardwareTrigger(
                      0 //TBD: IdModule
                   ,  0 //TBD: IdInstance
                   ,  0 //TBD: IdApi
-                  ,  ADC_E_WRONG_MODE_CONV
+                  ,  MCALADC_E_WRONG_MODE_CONV
                );
 #endif
             }
@@ -590,7 +590,7 @@ FUNC(void, ADC_CODE) module_McalAdc::DisableHardwareTrigger(
                   0 //TBD: IdModule
                ,  0 //TBD: IdInstance
                ,  0 //TBD: IdApi
-               ,  ADC_E_WRONG_SRC_TRIGG
+               ,  MCALADC_E_WRONG_SRC_TRIGG
             );
 #endif
          }
@@ -601,7 +601,7 @@ FUNC(void, ADC_CODE) module_McalAdc::DisableHardwareTrigger(
                0 //TBD: IdModule
             ,  0 //TBD: IdInstance
             ,  0 //TBD: IdApi
-            ,  ADC_E_PARAM_GROUP
+            ,  MCALADC_E_PARAM_GROUP
          );
 #endif
       }
@@ -613,14 +613,14 @@ FUNC(void, ADC_CODE) module_McalAdc::DisableHardwareTrigger(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
+         ,  MCALADC_E_UNINIT
       );
 #endif
    }
 #endif
 }
 
-FUNC(void, ADC_CODE) module_McalAdc::EnableGroupNotification(
+FUNC(void, MCALADC_CODE) module_McalAdc::EnableGroupNotification(
    void
 // McalAdc_TypeChannelGroup* lpstChannelGroup
 ){
@@ -634,7 +634,7 @@ FUNC(void, ADC_CODE) module_McalAdc::EnableGroupNotification(
          TRUE
          //TBD: group check lpstChannelGroup
       ){
-         //TBD: ADC_E_NOTIF_CAPABILITY, notification function pointer is NULL_PTR
+         //TBD: MCALADC_E_NOTIF_CAPABILITY, notification function pointer is NULL_PTR
       }
       else{
 #if(STD_ON == McalAdc_DevErrorDetect)
@@ -642,7 +642,7 @@ FUNC(void, ADC_CODE) module_McalAdc::EnableGroupNotification(
                0 //TBD: IdModule
             ,  0 //TBD: IdInstance
             ,  0 //TBD: IdApi
-            ,  ADC_E_PARAM_GROUP
+            ,  MCALADC_E_PARAM_GROUP
          );
 #endif
       }
@@ -654,14 +654,14 @@ FUNC(void, ADC_CODE) module_McalAdc::EnableGroupNotification(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
+         ,  MCALADC_E_UNINIT
       );
 #endif
    }
 #endif
 }
 
-FUNC(void, ADC_CODE) module_McalAdc::DisableGroupNotification(
+FUNC(void, MCALADC_CODE) module_McalAdc::DisableGroupNotification(
    void
 // McalAdc_TypeChannelGroup* lpstChannelGroup
 ){
@@ -675,7 +675,7 @@ FUNC(void, ADC_CODE) module_McalAdc::DisableGroupNotification(
          TRUE
          //TBD: group check lpstChannelGroup
       ){
-         //TBD: ADC_E_NOTIF_CAPABILITY, notification function pointer is NULL_PTR
+         //TBD: MCALADC_E_NOTIF_CAPABILITY, notification function pointer is NULL_PTR
       }
       else{
 #if(STD_ON == McalAdc_DevErrorDetect)
@@ -683,7 +683,7 @@ FUNC(void, ADC_CODE) module_McalAdc::DisableGroupNotification(
                0 //TBD: IdModule
             ,  0 //TBD: IdInstance
             ,  0 //TBD: IdApi
-            ,  ADC_E_PARAM_GROUP
+            ,  MCALADC_E_PARAM_GROUP
          );
 #endif
       }
@@ -695,14 +695,14 @@ FUNC(void, ADC_CODE) module_McalAdc::DisableGroupNotification(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
+         ,  MCALADC_E_UNINIT
       );
 #endif
    }
 #endif
 }
 
-FUNC(void, ADC_CODE) module_McalAdc::GetGroupStatus(
+FUNC(void, MCALADC_CODE) module_McalAdc::GetGroupStatus(
    void
 ){
 #if(STD_ON == McalAdc_InitCheck)
@@ -722,7 +722,7 @@ FUNC(void, ADC_CODE) module_McalAdc::GetGroupStatus(
                0 //TBD: IdModule
             ,  0 //TBD: IdInstance
             ,  0 //TBD: IdApi
-            ,  ADC_E_PARAM_GROUP
+            ,  MCALADC_E_PARAM_GROUP
          );
 #endif
       }
@@ -734,14 +734,14 @@ FUNC(void, ADC_CODE) module_McalAdc::GetGroupStatus(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
+         ,  MCALADC_E_UNINIT
       );
 #endif
    }
 #endif
 }
 
-FUNC(void, ADC_CODE) module_McalAdc::GetStreamLastPointer(
+FUNC(void, MCALADC_CODE) module_McalAdc::GetStreamLastPointer(
    McalAdc_TypeChannelGroup* lpstChannelGroup
 ){
 #if(STD_ON == McalAdc_InitCheck)
@@ -766,7 +766,7 @@ FUNC(void, ADC_CODE) module_McalAdc::GetStreamLastPointer(
                   0 //TBD: IdModule
                ,  0 //TBD: IdInstance
                ,  0 //TBD: IdApi
-               ,  ADC_E_IDLE
+               ,  MCALADC_E_IDLE
             );
 #endif
          }
@@ -777,7 +777,7 @@ FUNC(void, ADC_CODE) module_McalAdc::GetStreamLastPointer(
                0 //TBD: IdModule
             ,  0 //TBD: IdInstance
             ,  0 //TBD: IdApi
-            ,  ADC_E_PARAM_GROUP
+            ,  MCALADC_E_PARAM_GROUP
          );
 #endif
       }
@@ -789,7 +789,7 @@ FUNC(void, ADC_CODE) module_McalAdc::GetStreamLastPointer(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
+         ,  MCALADC_E_UNINIT
       );
 #endif
    }
@@ -815,7 +815,7 @@ McalAdc_TypeContextLowPower McalAdc_gstContextLowPower = {
    ,  E_NOT_OK
 };
 
-FUNC(void, ADC_CODE) module_McalAdc::PreparePowerState(
+FUNC(void, MCALADC_CODE) module_McalAdc::PreparePowerState(
    McalAdc_TypeStatePower lstStatePowerTargetRequested
 ){
    if(
@@ -839,7 +839,7 @@ FUNC(void, ADC_CODE) module_McalAdc::PreparePowerState(
                0 //TBD: IdModule
             ,  0 //TBD: IdInstance
             ,  0 //TBD: IdApi
-            ,  ADC_E_NOT_POSSIBLE_TRANSITION
+            ,  MCALADC_E_NOT_PSERVICEOSSIBLE_TRANSITION
          );
 #endif
       }
@@ -850,13 +850,13 @@ FUNC(void, ADC_CODE) module_McalAdc::PreparePowerState(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  ADC_E_NOT_SUPPORTED_STATE_POWER
+         ,  MCALADC_E_NOT_SUPMCALPORTED_STATE_POWER
       );
 #endif
    }
 }
 
-FUNC(void, ADC_CODE) module_McalAdc::SetPowerState(
+FUNC(void, MCALADC_CODE) module_McalAdc::SetPowerState(
    void
 // McalAdc_TypeChannelGroup* lpstChannelGroup
 ){
@@ -868,7 +868,7 @@ FUNC(void, ADC_CODE) module_McalAdc::SetPowerState(
 #endif
       if(
          TRUE
-         // check ADC_E_NOT_PREPARED_PERIPHERAL
+         // check MCALADC_E_NOT_PREPARED_PERIPHERAL
       ){
          if(
             TRUE
@@ -887,7 +887,7 @@ FUNC(void, ADC_CODE) module_McalAdc::SetPowerState(
                      0 //TBD: IdModule
                   ,  0 //TBD: IdInstance
                   ,  0 //TBD: IdApi
-                  ,  ADC_E_NOT_POSSIBLE_TRANSITION
+                  ,  MCALADC_E_NOT_PSERVICEOSSIBLE_TRANSITION
                );
 #endif
             }
@@ -898,7 +898,7 @@ FUNC(void, ADC_CODE) module_McalAdc::SetPowerState(
                   0 //TBD: IdModule
                ,  0 //TBD: IdInstance
                ,  0 //TBD: IdApi
-               ,  ADC_E_NOT_DISENGAGED
+               ,  MCALADC_E_NOT_DISENGAGED
             );
 #endif
          }
@@ -909,7 +909,7 @@ FUNC(void, ADC_CODE) module_McalAdc::SetPowerState(
                0 //TBD: IdModule
             ,  0 //TBD: IdInstance
             ,  0 //TBD: IdApi
-            ,  ADC_E_NOT_PREPARED_PERIPHERAL
+            ,  MCALADC_E_NOT_PREPARED_PERIPHERAL
          );
 #endif
       }
@@ -921,14 +921,14 @@ FUNC(void, ADC_CODE) module_McalAdc::SetPowerState(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
+         ,  MCALADC_E_UNINIT
       );
 #endif
    }
 #endif
 }
 
-FUNC(McalAdc_TypeStatePower, ADC_CODE) module_McalAdc::GetCurrentPowerState(
+FUNC(McalAdc_TypeStatePower, MCALADC_CODE) module_McalAdc::GetCurrentPowerState(
    void
 // McalAdc_TypeChannelGroup* lpstChannelGroup
 ){
@@ -948,7 +948,7 @@ FUNC(McalAdc_TypeStatePower, ADC_CODE) module_McalAdc::GetCurrentPowerState(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
+         ,  MCALADC_E_UNINIT
       );
 #endif
    }
@@ -956,7 +956,7 @@ FUNC(McalAdc_TypeStatePower, ADC_CODE) module_McalAdc::GetCurrentPowerState(
    return lReturnValue;
 }
 
-FUNC(McalAdc_TypeStatePower, ADC_CODE) module_McalAdc::GetTargetPowerState(
+FUNC(McalAdc_TypeStatePower, MCALADC_CODE) module_McalAdc::GetTargetPowerState(
    void
 // McalAdc_TypeChannelGroup* lpstChannelGroup
 ){
@@ -976,7 +976,7 @@ FUNC(McalAdc_TypeStatePower, ADC_CODE) module_McalAdc::GetTargetPowerState(
             0 //TBD: IdModule
          ,  0 //TBD: IdInstance
          ,  0 //TBD: IdApi
-         ,  ADC_E_UNINIT
+         ,  MCALADC_E_UNINIT
       );
 #endif
    }

@@ -1,18 +1,17 @@
 #pragma once
 /******************************************************************************/
-/* File   : infMcalAdc_Exp.hpp                                                    */
+/* File   : infMcalAdc_ServiceDet.hpp                                                    */
 /* Author : NAGARAJA HM (c) since 1982. All rights reserved.                  */
 /******************************************************************************/
 
 /******************************************************************************/
 /* #INCLUDES                                                                  */
 /******************************************************************************/
-#include "infMcalAdc_ServiceDet.hpp"
+#include "CompilerCfg_McalAdc.hpp"
 
 /******************************************************************************/
 /* #DEFINES                                                                   */
 /******************************************************************************/
-#define INTERFACES_EXMCALPORTED_MCALADC
 
 /******************************************************************************/
 /* MACROS                                                                     */
@@ -21,6 +20,21 @@
 /******************************************************************************/
 /* TYPEDEFS                                                                   */
 /******************************************************************************/
+typedef enum{
+      ADC_E_BUSY
+   ,  ADC_E_IDLE
+   ,  ADC_E_PARAM_GROUP
+   ,  ADC_E_PARAM_POINTER
+   ,  ADC_E_NOT_DISENGAGED
+   ,  ADC_E_NOT_POSSIBLE_TRANSITION
+   ,  ADC_E_NOT_PREPARED_PERIPHERAL
+   ,  ADC_E_NOT_SUPPORTED_STATE_POWER
+   ,  ADC_E_NOTIF_CAPABILITY
+   ,  ADC_E_UNINIT
+   ,  ADC_E_UNINIT_BUFFER
+   ,  ADC_E_WRONG_SRC_TRIGG
+   ,  ADC_E_WRONG_MODE_CONV
+}McalAdc_TypeServiceDetErrorCode;
 
 /******************************************************************************/
 /* CONSTS                                                                     */
