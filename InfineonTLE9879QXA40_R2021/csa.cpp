@@ -40,13 +40,16 @@
 /******************************************************************************/
 /* OBJECTS                                                                    */
 /******************************************************************************/
+CSA_Type CSA = {
+      0, 0, 0, 0
+};
 
 /******************************************************************************/
 /* FUNCTIONS                                                                  */
 /******************************************************************************/
 void CSA_Init(void){
-   CSA->CTRL.reg = (uint32) MF_CSA_CTRL;
-   MF->P2_ADCSEL_CTRL.bit.ADC1_CH1_SEL = 1u;
+   CSA.CTRL.reg = (uint32) MF_CSA_CTRL;
+   MF.P2_ADCSEL_CTRL.bit.ADC1_CH1_SEL = 1u;
 }
 /*
 uint16 CSA_Offset_Get(void){
@@ -57,13 +60,13 @@ uint16 CSA_Offset_Get(void){
    uint32 adc1_globctr;
    uint32 adc1_ie;
    uint32 adc1_ctrl_sts;
-   adc1_dwsel    = ADC1->DWSEL.reg;
-   adc1_sq_fb    = ADC1->SQ_FB.reg;
-   adc1_stc_0_3  = ADC1->STC_0_3.reg;
-   adc1_globctr  = ADC1->GLOBCTR.reg;
-   adc1_ie       = ADC1->IE.reg;
-   adc1_ctrl_sts = ADC1->CTRL_STS.reg;
-   CSA->CTRL.bit.VZERO = 0u;
+   adc1_dwsel    = ADC1.DWSEL.reg;
+   adc1_sq_fb    = ADC1.SQ_FB.reg;
+   adc1_stc_0_3  = ADC1.STC_0_3.reg;
+   adc1_globctr  = ADC1.GLOBCTR.reg;
+   adc1_ie       = ADC1.IE.reg;
+   adc1_ctrl_sts = ADC1.CTRL_STS.reg;
+   CSA.CTRL.bit.VZERO = 0u;
    ADC1_Ch1_Int_Dis();
    ADC1_Power_On();
    ADC1_ANON_Set((uint8)ADC1_ANON_NORMAL);
@@ -82,33 +85,33 @@ uint16 CSA_Offset_Get(void){
    while(ADC1_isEndOfConversion() == false) {}
    offset = ADC1_Ch1_Result_Get();
    ADC1_Ch1_Int_Clr();
-   ADC1->DWSEL.reg    = adc1_dwsel;
-   ADC1->SQ_FB.reg    = adc1_sq_fb;
-   ADC1->STC_0_3.reg  = adc1_stc_0_3;
-   ADC1->GLOBCTR.reg  = adc1_globctr;
-   ADC1->IE.reg       = adc1_ie;
-   ADC1->CTRL_STS.reg = adc1_ctrl_sts;
+   ADC1.DWSEL.reg    = adc1_dwsel;
+   ADC1.SQ_FB.reg    = adc1_sq_fb;
+   ADC1.STC_0_3.reg  = adc1_stc_0_3;
+   ADC1.GLOBCTR.reg  = adc1_globctr;
+   ADC1.IE.reg       = adc1_ie;
+   ADC1.CTRL_STS.reg = adc1_ctrl_sts;
    return(offset);
 }
 
 void CSA_Power_On(void){
-   Field_Mod32(&CSA->CTRL.reg, MF_CSA_CTRL_EN_Pos, MF_CSA_CTRL_EN_Msk, 1u);
+   Field_Mod32(&CSA.CTRL.reg, MF_CSA_CTRL_EN_Pos, MF_CSA_CTRL_EN_Msk, 1u);
 }
 
 void CSA_Power_Off(void){
-   Field_Mod32(&CSA->CTRL.reg, MF_CSA_CTRL_EN_Pos, MF_CSA_CTRL_EN_Msk, 0u);
+   Field_Mod32(&CSA.CTRL.reg, MF_CSA_CTRL_EN_Pos, MF_CSA_CTRL_EN_Msk, 0u);
 }
 
 void CSA_Gain_Set(uint32 gain){
-   Field_Mod32(&CSA->CTRL.reg, MF_CSA_CTRL_GAIN_Pos, MF_CSA_CTRL_GAIN_Msk, (gain));
+   Field_Mod32(&CSA.CTRL.reg, MF_CSA_CTRL_GAIN_Pos, MF_CSA_CTRL_GAIN_Msk, (gain));
 }
 
 uint32 CSA_Gain_Get(){
-   return u32_Field_Rd32(&CSA->CTRL.reg, MF_CSA_CTRL_GAIN_Pos, MF_CSA_CTRL_GAIN_Msk);
+   return u32_Field_Rd32(&CSA.CTRL.reg, MF_CSA_CTRL_GAIN_Pos, MF_CSA_CTRL_GAIN_Msk);
 }
 */
 void CSA_Set_Gain(uint8 gain){
-   Field_Mod32(&CSA->CTRL.reg, MF_CSA_CTRL_GAIN_Pos, MF_CSA_CTRL_GAIN_Msk, gain);
+   Field_Mod32(&CSA.CTRL.reg, MF_CSA_CTRL_GAIN_Pos, MF_CSA_CTRL_GAIN_Msk, gain);
 }
 
 /******************************************************************************/
