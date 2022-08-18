@@ -1252,9 +1252,18 @@ void ADC1_SetMode(uint8 mode){
    );
 }
 
+#if(STD_ON == _ReSIM)
+bool SocSwMode = false;
+#else
+#endif
+
 void ADC1_SetSocSwMode(uint8 Ch){
    ADC1_SW_Ch_Sel(Ch);
    ADC1_SOC_Set();
+#if(STD_ON == _ReSIM)
+   SocSwMode = true;
+#else
+#endif
 }
 
 bool ADC1_GetEocSwMode(void){
@@ -1262,6 +1271,10 @@ bool ADC1_GetEocSwMode(void){
    if(ADC1_EOC_Sts() == (uint8)1){
       res = true;
    }
+#if(STD_ON == _ReSIM)
+   res = SocSwMode;
+#else
+#endif
    return(res);
 }
 /*
