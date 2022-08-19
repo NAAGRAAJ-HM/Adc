@@ -1259,10 +1259,10 @@ void ADC1_SetMode(uint8 mode){
    );
 #if(STD_ON == _ReSIM)
    if(SW_MODE == mode){
-      ReSim_Busy = true;
+      ReSim_Busy = false;
    }
    else if(SEQ_MODE == mode){
-      ReSim_Busy = false;
+      ReSim_Busy = true;
    }
 #else
 #endif
