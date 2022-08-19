@@ -1262,6 +1262,7 @@ void ADC1_SetSocSwMode(uint8 Ch){
    ADC1_SOC_Set();
 #if(STD_ON == _ReSIM)
    SocSwMode = true;
+   ADC1.RES_OUT1.bit.VF1 = 1;
 #else
 #endif
 }
