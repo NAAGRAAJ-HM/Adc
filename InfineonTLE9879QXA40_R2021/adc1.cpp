@@ -124,7 +124,7 @@ bool VAREF_Enable(void){
 */
 
 #if(STD_ON == _ReSIM)
-uint16 ReSim_ChResult  = 0;
+uint16 ReSim_ChResult  = 1001;
 bool   ReSim_bRes      = true;
 bool   ReSim_SocSwMode = false;
 bool   ReSim_Busy      = false;
