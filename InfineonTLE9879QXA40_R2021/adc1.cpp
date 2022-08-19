@@ -1243,6 +1243,13 @@ uint8 ADC1_VDH_Attenuator_Range_Get(void){
 void ADC1_SetEIMChannel(uint8 channel){ADC1_EIM_Channel_Set(channel);}
 void ADC1_SetSwMode_Channel(uint8 channel){ADC1_SW_Ch_Sel(channel);}
 */
+
+#if(STD_ON == _ReSIM)
+bool ReSim_SocSwMode = false;
+bool ReSim_Busy      = false;
+#else
+#endif
+
 void ADC1_SetMode(uint8 mode){
    Field_Mod32(
          &ADC1.SQ_FB.reg
@@ -1250,18 +1257,22 @@ void ADC1_SetMode(uint8 mode){
       ,  ADC1_SQ_FB_SQ_RUN_Msk
       ,  mode
    );
-}
-
 #if(STD_ON == _ReSIM)
-bool SocSwMode = false;
+   if(SW_MODE == mode){
+      ReSim_Busy = true;
+   }
+   else if(SEQ_MODE == mode){
+      ReSim_Busy = false;
+   }
 #else
 #endif
+}
 
 void ADC1_SetSocSwMode(uint8 Ch){
    ADC1_SW_Ch_Sel(Ch);
    ADC1_SOC_Set();
 #if(STD_ON == _ReSIM)
-   SocSwMode = true;
+   ReSim_SocSwMode = true;
    ADC1.RES_OUT1.bit.VF1 = 1;
 #else
 #endif
@@ -1273,7 +1284,7 @@ bool ADC1_GetEocSwMode(void){
       res = true;
    }
 #if(STD_ON == _ReSIM)
-   res = SocSwMode;
+   res = ReSim_SocSwMode;
 #else
 #endif
    return(res);
@@ -1304,6 +1315,10 @@ bool ADC1_Busy(void){
    if(ADC1_Busy_Sts() == (uint8)1){
       res = true;
    }
+#if(STD_ON == _ReSIM)
+   res = ReSim_Busy;
+#else
+#endif
    return(res);
 }
 /*
