@@ -122,45 +122,56 @@ bool VAREF_Enable(void){
   return(res);
 }
 */
-bool ADC1_GetChResult(uint16 *pVar, uint8 channel){
-   const uint32 *pBaseAddr;
-   uint32* addr;
-   uint8 vf;
-   uint16 idx;
-   bool res;
-   res = false;
 
-   addr = &(ADC1.RES_OUT0.reg);
-   idx  = (uint16)((uint16)channel << 2u);
-   addr -= idx;
-   pBaseAddr = (uint32*) addr;
-   vf = u1_Field_Rd32(pBaseAddr, ADC1_RES_OUT0_VF0_Pos, ADC1_RES_OUT0_VF0_Msk);
+#if(STD_ON == _ReSIM)
+uint16 ReSim_ChResult  = 0;
+bool   ReSim_bRes      = false;
+bool   ReSim_SocSwMode = false;
+bool   ReSim_Busy      = false;
+#else
+#endif
 
-   if(vf == (uint8)1){
+bool ADC1_GetChResult(
+      uint16* pVar
+   ,  uint8   channel
+){
+   const uint32* pBaseAddr = &(ADC1.RES_OUT0.reg) - (channel << 2u);
+         bool    res       = false;
+   if(
+         (uint8)1
+      == u1_Field_Rd32(pBaseAddr, ADC1_RES_OUT0_VF0_Pos, ADC1_RES_OUT0_VF0_Msk)
+   ){
       *pVar = u16_Field_Rd32(pBaseAddr, ADC1_RES_OUT0_OUT_CH0_Pos, ADC1_RES_OUT0_OUT_CH0_Msk);
       *pVar >>= 2u;
       res = true;
    }
+#if(STD_ON == _ReSIM)
+   *pVar = ReSim_ChResult;
+   res   = ReSim_bRes;
+#else
+#endif
    return(res);
 }
 
-bool ADC1_GetChResult_mV(uint16 *pVar_mV, uint8 channel){
-  uint16 var;
-  bool res;
-  res = false;
-  if(ADC1_GetChResult(&var, channel) == true){
-    *pVar_mV = (uint16)((var * (uint16)ADC1_VREF_5000mV) / (uint16)1023);
-    if(channel == (uint8)ADC1_CH6){
-      if(ADC1_VDH_Attenuator_Range_Get() == (uint8)ADC1_VDH_Attenuator_Range_0_20V){
-        *pVar_mV = (uint16)((var * (uint16)ADC1_VREF_22000mV) / (uint16)1023);
+bool ADC1_GetChResult_mV(
+      uint16* pVar_mV
+   ,  uint8   channel
+){
+   uint16 var;
+   bool res = false;
+   if(true == ADC1_GetChResult(&var, channel)){
+      *pVar_mV = (uint16)((var * (uint16)ADC1_VREF_5000mV) / (uint16)1023);
+      if((uint8)ADC1_CH6 == channel){
+         if((uint8)ADC1_VDH_Attenuator_Range_0_20V == ADC1_VDH_Attenuator_Range_Get()){
+            *pVar_mV = (uint16)((var * (uint16)ADC1_VREF_22000mV) / (uint16)1023);
+         }
+         else{
+            *pVar_mV = (uint16)((var * (uint16)ADC1_VREF_30000mV) / (uint16)1023);
+         }
       }
-      else{
-        *pVar_mV = (uint16)((var * (uint16)ADC1_VREF_30000mV) / (uint16)1023);
-      }
-    }
-    res = true;
-  }
-  return(res);
+      res = true;
+   }
+   return(res);
 }
 
 /*
@@ -1243,12 +1254,6 @@ uint8 ADC1_VDH_Attenuator_Range_Get(void){
 void ADC1_SetEIMChannel(uint8 channel){ADC1_EIM_Channel_Set(channel);}
 void ADC1_SetSwMode_Channel(uint8 channel){ADC1_SW_Ch_Sel(channel);}
 */
-
-#if(STD_ON == _ReSIM)
-bool ReSim_SocSwMode = false;
-bool ReSim_Busy      = false;
-#else
-#endif
 
 void ADC1_SetMode(uint8 mode){
    Field_Mod32(
