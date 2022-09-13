@@ -24,7 +24,14 @@
 #define ADC1_RES_OUT3                                                      (0x0)
 #define ADC1_RES_OUT4                                                      (0x0)
 #define ADC1_RES_OUT5                                                      (0x0)
+
+#if(STD_ON == _ReSIM)
+#define ADC1_RES_OUT6                                                      (1UL)
+#else
 #define ADC1_RES_OUT6                                                      (0x0)
+#endif
+
+
 #define ADC1_RES_OUT_EIM                                                   (0x0)
 #define ADC1_SQ1_4                                                        (0x50)
 #define ADC1_SQ5_8                                                         (0x0)
