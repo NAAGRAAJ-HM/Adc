@@ -24,7 +24,6 @@
 #define ADC1_RES_OUT3                                                      (0x0)
 #define ADC1_RES_OUT4                                                      (0x0)
 #define ADC1_RES_OUT5                                                      (0x0)
-
 #if(STD_ON == _ReSIM)
 #define ADC1_RES_OUT6                                                      (1UL)
 #else
@@ -41,7 +40,6 @@
 #define MF_P2_ADCSEL_CTRL                                                (0x400)
 #define MF_REF2_CTRL                                                       (0x1)
 #define MF_VMON_SEN_CTRL                                                  (0x21)
-
 /******************************************************************************/
 /* MACROS                                                                     */
 /******************************************************************************/

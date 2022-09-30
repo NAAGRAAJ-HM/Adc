@@ -48,7 +48,11 @@ CSA_Type CSA = {
 /* FUNCTIONS                                                                  */
 /******************************************************************************/
 void CSA_Init(void){
+#if(CONFIGWIZARD == 1)
+   CSA.CTRL.reg = (uint32) CSA_CTRL;
+#else
    CSA.CTRL.reg = (uint32) MF_CSA_CTRL;
+#endif
    MF.P2_ADCSEL_CTRL.bit.ADC1_CH1_SEL = 1u;
 }
 /*
@@ -106,10 +110,11 @@ void CSA_Gain_Set(uint32 gain){
    Field_Mod32(&CSA.CTRL.reg, MF_CSA_CTRL_GAIN_Pos, MF_CSA_CTRL_GAIN_Msk, (gain));
 }
 
-uint32 CSA_Gain_Get(){
+uint32 CSA_Gain_Get(void){
    return u32_Field_Rd32(&CSA.CTRL.reg, MF_CSA_CTRL_GAIN_Pos, MF_CSA_CTRL_GAIN_Msk);
 }
 */
+
 void CSA_Set_Gain(uint8 gain){
    Field_Mod32(&CSA.CTRL.reg, MF_CSA_CTRL_GAIN_Pos, MF_CSA_CTRL_GAIN_Msk, gain);
 }

@@ -21,7 +21,6 @@
 /* #DEFINES                                                                   */
 /******************************************************************************/
 #define VAREF_4750mV ((uint32)(((4.750F * 0.219F) * 1023.0F) / ADC2_VREF))
-
 /******************************************************************************/
 /* MACROS                                                                     */
 /******************************************************************************/
@@ -55,11 +54,29 @@ void ADC1_Init(void){
    ADC1.SQ1_4.reg = (uint32) ADC1_SQ1_4;
    ADC1.SQ5_8.reg = (uint32) ADC1_SQ5_8;
    ADC1.SQ_FB.reg = (uint32) ADC1_SQ_FB;
+
+#if(CONFIGWIZARD == 1)
+  ADC1.CHx_EIM.reg = (uint32) ADC1_CHX_EIM;
+  ADC1.CHx_ESM.reg = (uint32) ADC1_ESM;
+#else
    ADC1.CHx_EIM.reg = (uint32) ADC1_CHx_EIM;
    ADC1.CHx_ESM.reg = (uint32) ADC1_CHx_ESM;
+#endif
+
    ADC1.DWSEL.reg = (uint32) ADC1_DWSEL;
    ADC1.STC_0_3.reg = (uint32) ADC1_STC_0_3;
    ADC1.STC_4_7.reg = (uint32) ADC1_STC_4_7;
+
+#if(CONFIGWIZARD == 1)
+  ADC1.RES_OUT0.reg = (uint32) ADC1_RES0;
+  ADC1.RES_OUT1.reg = (uint32) ADC1_RES1;
+  ADC1.RES_OUT2.reg = (uint32) ADC1_RES2;
+  ADC1.RES_OUT3.reg = (uint32) ADC1_RES3;
+  ADC1.RES_OUT4.reg = (uint32) ADC1_RES4;
+  ADC1.RES_OUT5.reg = (uint32) ADC1_RES5;
+  ADC1.RES_OUT6.reg = (uint32) ADC1_RES6;
+  ADC1.RES_OUT_EIM.reg = (uint32) ADC1_RES_EIM;
+#else
    ADC1.RES_OUT0.reg = (uint32) ADC1_RES_OUT0;
    ADC1.RES_OUT1.reg = (uint32) ADC1_RES_OUT1;
    ADC1.RES_OUT2.reg = (uint32) ADC1_RES_OUT2;
@@ -68,6 +85,8 @@ void ADC1_Init(void){
    ADC1.RES_OUT5.reg = (uint32) ADC1_RES_OUT5;
    ADC1.RES_OUT6.reg = (uint32) ADC1_RES_OUT6;
    ADC1.RES_OUT_EIM.reg = (uint32) ADC1_RES_OUT_EIM;
+#endif
+
    ADC1.IE.reg = (uint32) ADC1_IE;
    MF.VMON_SEN_CTRL.reg = MF_VMON_SEN_CTRL;
    MF.REF2_CTRL.reg = MF_REF2_CTRL;
@@ -101,7 +120,6 @@ bool VAREF_Enable(void){
   }
 
   if(timeout > (uint16)0){
-
     MF.REF2_CTRL.bit.VREF5V_PD_N = 1u;
 
     timeout = 10u;
@@ -112,14 +130,12 @@ bool VAREF_Enable(void){
     }
 
     if(timeout > (uint16)0){
-
       res = true;
     }
   }
 
-
   ADC2->TH6_9_LOWER.reg = temp;
-  return(res);
+   return(res);
 }
 */
 
@@ -185,7 +201,7 @@ bool ADC1_GetEIMResult(uint16 *pVar){
     *pVar >>= 2u;
     res = true;
   }
-  return(res);
+   return(res);
 }
 
 bool ADC1_GetEIMResult_mV(uint16 *pVar_mV){
@@ -195,20 +211,15 @@ bool ADC1_GetEIMResult_mV(uint16 *pVar_mV){
   res = false;
 
   if(ADC1_GetEIMResult(&var) == true){
-
     *pVar_mV = (uint16)((var * (uint16)ADC1_VREF_5000mV) / (uint16)1023);
 
     eim_ch = u8_Field_Rd32(&ADC1.CHx_EIM.reg, ADC1_CHx_EIM_CHx_Pos, ADC1_CHx_EIM_CHx_Msk);
 
     if(eim_ch == (uint8)ADC1_CH6){
-
       if(ADC1_VDH_Attenuator_Range_Get() == (uint8)ADC1_VDH_Attenuator_Range_0_20V){
-
         *pVar_mV = (uint16)((var * (uint16)ADC1_VREF_22000mV) / (uint16)1023);
       }
-      else
-      {
-
+      else{
         *pVar_mV = (uint16)((var * (uint16)ADC1_VREF_30000mV) / (uint16)1023);
       }
     }
@@ -216,7 +227,7 @@ bool ADC1_GetEIMResult_mV(uint16 *pVar_mV){
     res = true;
   }
 
-  return(res);
+   return(res);
 }
 */
 void ADC1_Power_On(void){
