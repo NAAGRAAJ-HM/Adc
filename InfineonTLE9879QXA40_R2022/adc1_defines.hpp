@@ -11,7 +11,35 @@
 /******************************************************************************/
 /* #DEFINES                                                                   */
 /******************************************************************************/
+#define ADC1_XML_VERSION                                                 (20207)
+#define ADC1_CHx_EIM                                                       (0x0)
+#define ADC1_CHx_ESM                                                   (0x10002)
+#define ADC1_CLK                                                          (0x14)
+#define ADC1_DWSEL                                                         (0x0)
+#define ADC1_GLOBCTR                                                     (0x301)
+#define ADC1_IE                                                          (0x200)
+#define ADC1_RES_OUT0                                                      (0x0)
+#define ADC1_RES_OUT1                                                      (0x0)
+#define ADC1_RES_OUT2                                                      (0x0)
+#define ADC1_RES_OUT3                                                      (0x0)
+#define ADC1_RES_OUT4                                                      (0x0)
+#define ADC1_RES_OUT5                                                      (0x0)
+#if(STD_ON == _ReSIM)
+#define ADC1_RES_OUT6                                                      (1UL)
+#else
+#define ADC1_RES_OUT6                                                      (0x0)
+#endif
 
+
+#define ADC1_RES_OUT_EIM                                                   (0x0)
+#define ADC1_SQ1_4                                                        (0x50)
+#define ADC1_SQ5_8                                                         (0x0)
+#define ADC1_SQ_FB                                                       (0x100)
+#define ADC1_STC_0_3                                                     (0xA00)
+#define ADC1_STC_4_7                                                   (0xA000A)
+#define MF_P2_ADCSEL_CTRL                                                (0x400)
+#define MF_REF2_CTRL                                                       (0x1)
+#define MF_VMON_SEN_CTRL                                                  (0x21)
 /******************************************************************************/
 /* MACROS                                                                     */
 /******************************************************************************/
@@ -19,12 +47,6 @@
 /******************************************************************************/
 /* TYPEDEFS                                                                   */
 /******************************************************************************/
-typedef enum{
-      CSA_GAIN_10  = 0
-   ,  CSA_GAIN_20  = 1
-   ,  CSA_GAIN_40  = 2
-   ,  CSA_GAIN_60  = 3
-}TCSA_Gain;
 
 /******************************************************************************/
 /* CONSTS                                                                     */
@@ -41,14 +63,6 @@ typedef enum{
 /******************************************************************************/
 /* FUNCTIONS                                                                  */
 /******************************************************************************/
-extern void   CSA_Init                                                   (void);
-extern uint16 CSA_Offset_Get                                             (void);
-extern void   CSA_Power_On                                               (void);
-extern void   CSA_Power_Off                                              (void);
-extern void   CSA_Gain_Set                                        (uint32 gain);
-extern uint32 CSA_Gain_Get                                               (void);
-extern void   CSA_Set_Gain                                         (uint8 gain);
-extern void   CSA_ClearVZERO                                             (void);
 
 /******************************************************************************/
 /* EOF                                                                        */
