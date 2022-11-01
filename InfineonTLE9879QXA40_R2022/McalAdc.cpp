@@ -47,6 +47,10 @@ VAR(module_McalAdc, MCALADC_VAR) McalAdc;
 /******************************************************************************/
 /* FUNCTIONS                                                                  */
 /******************************************************************************/
+extern void ADC1_Init (void); //TBD: use interface headers as per architecture
+extern void ADC2_Init (void); //TBD: use interface headers as per architecture
+extern void CSA_Init  (void); //TBD: use interface headers as per architecture
+
 FUNC(void, MCALADC_CODE) module_McalAdc::InitFunction(
       CONSTP2CONST(ConstModule_TypeAbstract, MCALADC_CONST,       MCALADC_APPL_CONST) lptrConstModule
    ,  CONSTP2CONST(CfgModule_TypeAbstract,   MCALADC_CONFIG_DATA, MCALADC_APPL_CONST) lptrCfgModule
@@ -74,6 +78,9 @@ FUNC(void, MCALADC_CODE) module_McalAdc::InitFunction(
          );
 #endif
       }
+      ADC1_Init();
+      ADC2_Init();
+      CSA_Init();
 #if(STD_ON == McalAdc_InitCheck)
       IsInitDone = E_OK;
    }

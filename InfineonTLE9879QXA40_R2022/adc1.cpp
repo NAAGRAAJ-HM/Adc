@@ -1,5 +1,5 @@
 /******************************************************************************/
-/* File   : Template.hpp                                                      */
+/* File   : adc1.cpp                                                          */
 /* Author : NAGARAJA HM (c) since 1982. All rights reserved.                  */
 /******************************************************************************/
 
@@ -11,18 +11,16 @@
 #include "uC_Adc.hpp"
 #include "uC_Mf.hpp"
 #include "uC_Scu.hpp"
-
 #include "adc1.hpp"
-
 #include "adc1_defines.hpp"
 #include "wdt1.hpp"
 #include "sfr_access.hpp"
-#include "RTE_Components.hpp"
 
 /******************************************************************************/
 /* #DEFINES                                                                   */
 /******************************************************************************/
 #define VAREF_4750mV ((uint32)(((4.750F * 0.219F) * 1023.0F) / ADC2_VREF))
+
 /******************************************************************************/
 /* MACROS                                                                     */
 /******************************************************************************/
@@ -69,47 +67,28 @@ uint32 ADC1_GetRES_OUT6(void){
 }
 
 void ADC1_Init(void){
-   ADC1.GLOBCTR.reg = (uint32) ADC1_GLOBCTR;
-   ADC1.SQ1_4.reg = (uint32) ADC1_SQ1_4;
-   ADC1.SQ5_8.reg = (uint32) ADC1_SQ5_8;
-   ADC1.SQ_FB.reg = (uint32) ADC1_SQ_FB;
-
-#if(CONFIGWIZARD == 1)
-  ADC1.CHx_EIM.reg = (uint32) ADC1_CHX_EIM;
-  ADC1.CHx_ESM.reg = (uint32) ADC1_ESM;
-#else
-   ADC1.CHx_EIM.reg = (uint32) ADC1_CHx_EIM;
-   ADC1.CHx_ESM.reg = (uint32) ADC1_CHx_ESM;
-#endif
-
-   ADC1.DWSEL.reg = (uint32) ADC1_DWSEL;
-   ADC1.STC_0_3.reg = (uint32) ADC1_STC_0_3;
-   ADC1.STC_4_7.reg = (uint32) ADC1_STC_4_7;
-
-#if(CONFIGWIZARD == 1)
-  ADC1.RES_OUT0.reg = (uint32) ADC1_RES0;
-  ADC1.RES_OUT1.reg = (uint32) ADC1_RES1;
-  ADC1.RES_OUT2.reg = (uint32) ADC1_RES2;
-  ADC1.RES_OUT3.reg = (uint32) ADC1_RES3;
-  ADC1.RES_OUT4.reg = (uint32) ADC1_RES4;
-  ADC1.RES_OUT5.reg = (uint32) ADC1_RES5;
-  ADC1.RES_OUT6.reg = (uint32) ADC1_RES6;
-  ADC1.RES_OUT_EIM.reg = (uint32) ADC1_RES_EIM;
-#else
-   ADC1.RES_OUT0.reg = (uint32) ADC1_RES_OUT0;
-   ADC1.RES_OUT1.reg = (uint32) ADC1_RES_OUT1;
-   ADC1.RES_OUT2.reg = (uint32) ADC1_RES_OUT2;
-   ADC1.RES_OUT3.reg = (uint32) ADC1_RES_OUT3;
-   ADC1.RES_OUT4.reg = (uint32) ADC1_RES_OUT4;
-   ADC1.RES_OUT5.reg = (uint32) ADC1_RES_OUT5;
-   ADC1.RES_OUT6.reg = (uint32) ADC1_RES_OUT6;
-   ADC1.RES_OUT_EIM.reg = (uint32) ADC1_RES_OUT_EIM;
-#endif
-
-   ADC1.IE.reg = (uint32) ADC1_IE;
-   MF.VMON_SEN_CTRL.reg = MF_VMON_SEN_CTRL;
-   MF.REF2_CTRL.reg = MF_REF2_CTRL;
+   ADC1.GLOBCTR.reg        = (uint32) ADC1_GLOBCTR;
+   ADC1.SQ1_4.reg          = (uint32) ADC1_SQ1_4;
+   ADC1.SQ5_8.reg          = (uint32) ADC1_SQ5_8;
+   ADC1.SQ_FB.reg          = (uint32) ADC1_SQ_FB;
+   ADC1.CHx_EIM.reg        = (uint32) ADC1_CHx_EIM;
+   ADC1.CHx_ESM.reg        = (uint32) ADC1_CHx_ESM;
+   ADC1.DWSEL.reg          = (uint32) ADC1_DWSEL;
+   ADC1.STC_0_3.reg        = (uint32) ADC1_STC_0_3;
+   ADC1.STC_4_7.reg        = (uint32) ADC1_STC_4_7;
+   ADC1.RES_OUT0.reg       = (uint32) ADC1_RES_OUT0;
+   ADC1.RES_OUT1.reg       = (uint32) ADC1_RES_OUT1;
+   ADC1.RES_OUT2.reg       = (uint32) ADC1_RES_OUT2;
+   ADC1.RES_OUT3.reg       = (uint32) ADC1_RES_OUT3;
+   ADC1.RES_OUT4.reg       = (uint32) ADC1_RES_OUT4;
+   ADC1.RES_OUT5.reg       = (uint32) ADC1_RES_OUT5;
+   ADC1.RES_OUT6.reg       = (uint32) ADC1_RES_OUT6;
+   ADC1.RES_OUT_EIM.reg    = (uint32) ADC1_RES_OUT_EIM;
+   ADC1.IE.reg             = (uint32) ADC1_IE;
+   MF.VMON_SEN_CTRL.reg    = MF_VMON_SEN_CTRL;
+   MF.REF2_CTRL.reg        = MF_REF2_CTRL;
    SCU.PMCON1.bit.ADC1_DIS = 0;
+
    ADC1_ANON_Set((uint8)ADC1_ANON_NORMAL);
    ADC1_Power_On();
 #if(ADC1_XML_VERSION >= 10302)

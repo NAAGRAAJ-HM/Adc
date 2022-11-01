@@ -1,5 +1,5 @@
 /******************************************************************************/
-/* File   : Template.hpp                                                      */
+/* File   : csa.cpp                                                           */
 /* Author : NAGARAJA HM (c) since 1982. All rights reserved.                  */
 /******************************************************************************/
 
@@ -12,10 +12,8 @@
 
 #include "uC_Csa.hpp"
 #include "uC_Mf.hpp"
-
 #include "sfr_access.hpp"
 #include "adc1.hpp"
-#include "RTE_Components.hpp"
 
 #include "csa_defines.hpp"
 
@@ -54,11 +52,7 @@ void CSA_ClearVZERO(void){ // CSA_Power_Off ?
 }
 
 void CSA_Init(void){
-#if(CONFIGWIZARD == 1)
-   CSA.CTRL.reg = (uint32) CSA_CTRL;
-#else
    CSA.CTRL.reg = (uint32) MF_CSA_CTRL;
-#endif
    MF.P2_ADCSEL_CTRL.bit.ADC1_CH1_SEL = 1u;
 }
 /*
