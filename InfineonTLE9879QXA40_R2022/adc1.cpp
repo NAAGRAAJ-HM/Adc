@@ -172,19 +172,34 @@ bool ADC1_GetChResult_mV(
    ,  uint8   channel
 ){
    uint16 var;
-   bool res = false;
-   if(true == ADC1_GetChResult(&var, channel)){
-      *pVar_mV = (uint16)((var * (uint16)ADC1_VREF_5000mV) / (uint16)1023);
-      if((uint8)ADC1_CH6 == channel){
-         if((uint8)ADC1_VDH_Attenuator_Range_0_20V == ADC1_VDH_Attenuator_Range_Get()){
+   bool   res = ADC1_GetChResult(
+                     &var
+                  ,  channel
+               );
+
+   if(
+         true
+      == res
+   ){
+      if(
+            (uint8)ADC1_CH6
+         == channel
+      ){
+         if(
+               (uint8)ADC1_VDH_Attenuator_Range_0_20V
+            == ADC1_VDH_Attenuator_Range_Get()
+         ){
             *pVar_mV = (uint16)((var * (uint16)ADC1_VREF_22000mV) / (uint16)1023);
          }
          else{
             *pVar_mV = (uint16)((var * (uint16)ADC1_VREF_30000mV) / (uint16)1023);
          }
       }
-      res = true;
+      else{
+         *pVar_mV = (uint16)((var * (uint16)ADC1_VREF_5000mV) / (uint16)1023);
+      }
    }
+
    return(res);
 }
 
