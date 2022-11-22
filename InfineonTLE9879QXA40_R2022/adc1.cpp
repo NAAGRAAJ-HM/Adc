@@ -476,7 +476,7 @@ uint16 ADC1_Ch0_Result_Get(void){
       )
    );
 }
-
+*/
 uint16 ADC1_Ch1_Result_Get(void){
    return(
       u16_Field_Rd32(
@@ -487,6 +487,16 @@ uint16 ADC1_Ch1_Result_Get(void){
    );
 }
 
+uint8 ADC1_Ch1_ResultValid_Get(void){
+   return(
+      u1_Field_Rd32(
+            &ADC1.RES_OUT1.reg
+         ,  ADC1_RES_OUT1_VF1_Pos
+         ,  ADC1_RES_OUT1_VF1_Msk
+      )
+   );
+}
+/*
 uint16 ADC1_Ch2_Result_Get(void){
    return(
       u16_Field_Rd32(
@@ -561,16 +571,6 @@ uint8 ADC1_Ch0_ResultValid_Get(void){
             &ADC1.RES_OUT0.reg
          ,  ADC1_RES_OUT0_VF0_Pos
          ,  ADC1_RES_OUT0_VF0_Msk
-      )
-   );
-}
-
-uint8 ADC1_Ch1_ResultValid_Get(void){
-   return(
-      u1_Field_Rd32(
-            &ADC1.RES_OUT1.reg
-         ,  ADC1_RES_OUT1_VF1_Pos
-         ,  ADC1_RES_OUT1_VF1_Msk
       )
    );
 }
@@ -1415,6 +1415,21 @@ TADC1_ANON ADC1_ANON_Sts(void){
    return(res.adc1_anon);
 }
 */
+
+uint32 Emo_HandleAdc1_Adc1(void){
+   ADC1.IE.bit.ESM_IE = 0;
+   return ADC1.RES_OUT1.reg;
+}
+
+void Emo_HandleFoc_Adc1_1(void){
+   ADC1.ICLR.bit.ESM_ICLR = 1;
+   ADC1.IE.bit.ESM_IE     = 1;
+}
+
+uint32 Emo_HandleFoc_Adc1_2(void){ //TBD: Standard API
+   return ADC1.RES_OUT1.reg;
+}
+
 /******************************************************************************/
 /* EOF                                                                        */
 /******************************************************************************/
