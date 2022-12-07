@@ -1416,18 +1416,19 @@ TADC1_ANON ADC1_ANON_Sts(void){
 }
 */
 
-uint32 Emo_HandleAdc1_Adc1(void){
-   ADC1.IE.bit.ESM_IE = 0;
-   return ADC1.RES_OUT1.reg;
-}
-
-void Emo_HandleFoc_Adc1_1(void){
-   ADC1.ICLR.bit.ESM_ICLR = 1;
-   ADC1.IE.bit.ESM_IE     = 1;
-}
-
-uint32 Emo_HandleFoc_Adc1_2(void){ //TBD: Standard API
-   return ADC1.RES_OUT1.reg;
+extern void RteWrite_AdcResult(  //TBD: move to destination module specific Rte interface
+   sint16* lptrInput
+);
+void Emo_HandleAdc1(void){
+   static uint32 lu32AdcResult[2u];
+   static sint16 ls16AdcResult[3u];
+   ADC1.IE.bit.ESM_IE = 0; lu32AdcResult[0u] = ADC1.RES_OUT1.reg; ADC1.ICLR.bit.ESM_ICLR = 1;
+   ADC1.IE.bit.ESM_IE = 1; lu32AdcResult[1u] = ADC1.RES_OUT1.reg;
+   ls16AdcResult[0u] = lu32AdcResult[0u] & 0x0FFFu;
+   ls16AdcResult[1u] = lu32AdcResult[1u] & 0x0FFFu;
+   ls16AdcResult[2u] = ls16AdcResult[0u]
+                     + ls16AdcResult[1u];
+   RteWrite_AdcResult(&ls16AdcResult[0u]);
 }
 
 /******************************************************************************/
