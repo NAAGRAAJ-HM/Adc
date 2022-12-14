@@ -138,6 +138,7 @@ FUNC(void, MCALADC_CODE) module_McalAdc::DeInitFunction(
 #endif
 }
 
+extern void Emo_HandleAdc1(void);
 FUNC(void, MCALADC_CODE) module_McalAdc::MainFunction(
    void
 ){
@@ -147,6 +148,7 @@ FUNC(void, MCALADC_CODE) module_McalAdc::MainFunction(
       == IsInitDone
    ){
 #endif
+      Emo_HandleAdc1();
 #if(STD_ON == McalAdc_InitCheck)
    }
    else{
