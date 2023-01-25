@@ -1,13 +1,13 @@
 #pragma once
 /******************************************************************************/
-/* File   : McalAdc.hpp                                                           */
+/* File   : McalAdc.hpp                                                       */
 /* Author : NAGARAJA HM (c) since 1982. All rights reserved.                  */
 /******************************************************************************/
 
 /******************************************************************************/
 /* #INCLUDES                                                                  */
 /******************************************************************************/
-#include "ConstMcalAdc.hpp"
+#include "infMcalAdc_ServiceNvM_Types.hpp"
 #include "CfgMcalAdc.hpp"
 #include "McalAdc_core.hpp"
 #include "infMcalAdc_Exp.hpp"
