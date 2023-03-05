@@ -8,6 +8,8 @@
 /******************************************************************************/
 #include "types.hpp"
 
+#include "ReSim.hpp"
+
 #include "uC_Adc.hpp"
 #include "uC_Mf.hpp"
 #include "uC_Scu.hpp"
