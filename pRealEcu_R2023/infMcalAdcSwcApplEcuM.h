@@ -53,7 +53,7 @@
 /******************************************************************************/
 /* FUNCTIONS                                                                  */
 /******************************************************************************/
-extern FUNC(void, MCALADC_CODE) infMcalAdcSwcApplEcuM_InitFunction(void);
+extern FUNC(void, MCALADC_CODE) infMcalAdcSwcApplEcuM_vInitFunction(void);
 
 /******************************************************************************/
 /* EOF                                                                        */
