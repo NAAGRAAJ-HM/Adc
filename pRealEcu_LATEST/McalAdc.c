@@ -23,12 +23,12 @@
 /******************************************************************************/
 /* #INCLUDES                                                                  */
 /******************************************************************************/
-#include "Std_Types.h"
+#include "Std_Types.hpp"
 
-#include "infMcalAdcSwcApplEcuM.h"
+#include "infMcalAdcSwcApplEcuM.hpp"
 
-#include "uC_Adc.h"
-#include "CfgMcalAdc.h"
+#include "uC_Adc.hpp"
+#include "CfgMcalAdc.hpp"
 
 /******************************************************************************/
 /* #DEFINES                                                                   */
