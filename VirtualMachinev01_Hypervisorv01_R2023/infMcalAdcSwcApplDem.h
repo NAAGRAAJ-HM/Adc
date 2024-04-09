@@ -1,9 +1,9 @@
-#ifndef _INFMCALADCSWCSERVICEECUM_H
-#define _INFMCALADCSWCSERVICEECUM_H
+#ifndef _INFMCALADCSWCAPPLDEM_H
+#define _INFMCALADCSWCAPPLDEM_H
 /******************************************************************************/
-/* File   : infMcalAdcSwcServiceEcuM.h                                        */
+/* File   : infMcalAdcSwcApplDem.h                                            */
 /*                                                                            */
-/* Author : Raajnaag HULIYAPURADA MATA                                        */
+/* Author : Nagaraja HULIYAPURADA MATA                                        */
 /*                                                                            */
 /* License / Warranty / Terms and Conditions                                  */
 /*                                                                            */
@@ -15,7 +15,7 @@
 /* certain responsibilities, if you distribute copies of the software, or if  */
 /* you modify it: responsibilities to respect the freedom of others.          */
 /*                                                                            */
-/* All rights reserved. Copyright © 1982 Raajnaag HULIYAPURADA MATA           */
+/* All rights reserved. Copyright © 1982 Nagaraja HULIYAPURADA MATA           */
 /*                                                                            */
 /* Always refer latest software version from:                                 */
 /* https://github.com/RaajnaagHuliyapuradaMata?tab=repositories               */
@@ -40,9 +40,13 @@
 /******************************************************************************/
 
 /******************************************************************************/
+/* OBJECTS                                                                    */
+/******************************************************************************/
+
+/******************************************************************************/
 /* FUNCTIONS                                                                  */
 /******************************************************************************/
-extern FUNC(void, MCALADC_CODE) infMcalAdcSwcServiceEcuM_vInitFunction(void);
+extern FUNC(uint8, MCALADC_CODE) infMcalAdcSwcApplDem_u8GetVoltageKl30(void);
 
 /******************************************************************************/
 /* CONSTS                                                                     */

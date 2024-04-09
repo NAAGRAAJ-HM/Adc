@@ -1,8 +1,9 @@
-#pragma once
+#ifndef _INFMCALADCSWCAPPLOS_H
+#define _INFMCALADCSWCAPPLOS_H
 /******************************************************************************/
-/* File   : infMcalAdcSwcApplEcuM.h                                           */
+/* File   : infMcalAdcSwcApplOs.h                                             */
 /*                                                                            */
-/* Author : Raajnaag HULIYAPURADA MATA                                        */
+/* Author : Nagaraja HULIYAPURADA MATA                                        */
 /*                                                                            */
 /* License / Warranty / Terms and Conditions                                  */
 /*                                                                            */
@@ -14,7 +15,7 @@
 /* certain responsibilities, if you distribute copies of the software, or if  */
 /* you modify it: responsibilities to respect the freedom of others.          */
 /*                                                                            */
-/* All rights reserved. Copyright © 1982 Raajnaag HULIYAPURADA MATA           */
+/* All rights reserved. Copyright © 1982 Nagaraja HULIYAPURADA MATA           */
 /*                                                                            */
 /* Always refer latest software version from:                                 */
 /* https://github.com/RaajnaagHuliyapuradaMata?tab=repositories               */
@@ -24,7 +25,7 @@
 /******************************************************************************/
 /* #INCLUDES                                                                  */
 /******************************************************************************/
-#include "MemMap_McalAdc.hpp"
+#include "CompilerCfg_McalAdc.h"
 
 /******************************************************************************/
 /* #DEFINES                                                                   */
@@ -39,6 +40,16 @@
 /******************************************************************************/
 
 /******************************************************************************/
+/* OBJECTS                                                                    */
+/******************************************************************************/
+
+/******************************************************************************/
+/* FUNCTIONS                                                                  */
+/******************************************************************************/
+extern FUNC(void, MCALADC_CODE) infMcalAdcSwcApplOs_vRunnableConversionStartSG1         (void);
+extern FUNC(void, MCALADC_CODE) infMcalAdcSwcApplOs_vRunnableConversionCompleteChannel2 (void);
+
+/******************************************************************************/
 /* CONSTS                                                                     */
 /******************************************************************************/
 
@@ -51,10 +62,6 @@
 /******************************************************************************/
 
 /******************************************************************************/
-/* FUNCTIONS                                                                  */
-/******************************************************************************/
-extern FUNC(void, MCALADC_CODE) infMcalAdcSwcApplEcuM_vInitFunction(void);
-
-/******************************************************************************/
 /* EOF                                                                        */
 /******************************************************************************/
+#endif
